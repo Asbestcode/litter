@@ -21,7 +21,7 @@ export default function LoginPage({providers}) {
         {Object.values(providers).map(provider => (
             <div key={provider.id}>
                 <button
-                  style={{width: "100%", padding: "20px", cursor: "pointer"}} 
+                  style={{width: "100%", padding: "19px", cursor: "pointer"}} 
                   onClick={async () => {await signIn(provider.id)}}>
                   Sign in with {provider.name}
                 </button>
