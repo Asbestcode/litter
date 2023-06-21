@@ -14,23 +14,20 @@ export default function PostForm({onPost}) {
     }
 
     return (
-        <form 
-            onSubmit={handlePostSubmit}
-            style={{display: "inline", backgroundColor: "lightgrey", padding: "10px"}}
-        >
-            <textarea
-                rows="4" 
-                cols="100"
-                style={{width: "100%"}}
+        <form onSubmit={handlePostSubmit}>
+            <div className="grow rounded-lg border border-litterWhite overflow-hidden h-20">
+                <textarea
+                className="w-full p-2 bg-transparent text-litterWhite resize-none m-0 h-full"
                 placeholder={'write some garbage'}
                 value={text}
-                onChange={e => setText(e.target.value)}/>
-            <button 
-                type="submit"
-                style={{width: "auto", padding: "10px", cursor:"pointer", fontSize: "1rem"}}
-            >
-                submit
-            </button>
+                onChange={e => setText(e.target.value)}
+                />
+            </div>
+            <div className="text-right">
+                <button className="bg-litterBlue px-5 py-2 rounded-full" type="submit">
+                    submit
+                </button>
+            </div>
         </form>
     )
 }

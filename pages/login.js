@@ -2,6 +2,7 @@ import {getProviders, signIn, signOut, useSession} from 'next-auth/react'
 import {useRouter} from "next/router";
 import UsernameForm from '../components/UsernameForm';
 import useUserInfo from "../hooks/useUserInfo";
+import ProviderLogo from '../components/ProviderLogo';
 
 export default function LoginPage({providers}) {
     const {data, status} = useSession();
@@ -16,17 +17,16 @@ export default function LoginPage({providers}) {
     }
 
     return (
-        <div>
-          <h2 style={{fontFamily: "sans-serif"}}>Welcome to Litter,<br/> please sign in:</h2><br/>
-        {Object.values(providers).map(provider => (
+        <div className="flex flex-col gap-4 items-center justify-center h-screen">
+          <h2 className="text-white">Welcome to Litter</h2>
+          {Object.values(providers).map(provider => (
             <div key={provider.id}>
-                <button
-                  style={{width: "100%", padding: "20px", cursor: "pointer"}} 
-                  onClick={async () => {await signIn(provider.id)}}>
+                <button onClick={async () => {await signIn(provider.id)}} className="bg-litterWhite pl-3 pr-5 py-2 text-black rounded-full flex items-center">
+                  <ProviderLogo provider={provider.name}/>
                   Sign in with {provider.name}
                 </button>
             </div>
-            ))}
+          ))}
         </div>
     )
 
