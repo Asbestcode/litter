@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       colors: {
         litterWhite: '#e7e9ea',
-        litterBlue: '#FFA500',
+        litterBlue: '#308CD8',
         litterBorder: '#2f3336',
         litterLightGray: '#71767b',
         litterDarkGray: '#17181C',

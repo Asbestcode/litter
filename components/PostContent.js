@@ -1,21 +1,21 @@
 import ReactTimeAgo from "react-time-ago";
+import Link from "next/link";
 
-export default function PostContent({text, createdAt, author}) {
+export default function PostContent({text, createdAt, author, _id }) {
     return (
-        <div className="flex flex-col">
-            <div className="">
-                <span className="">{author.username}</span>
+        <div className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+            <div className="mb-2">
+                <Link href={'/'+author?.username} className="font-bold">{author?.username}</Link>
+                <span className="pl-1 text-litterLightGray">
+                    · <ReactTimeAgo date={createdAt} />
+                </span>
             </div>
-            <div className="flex">
+            <Link href={`/${author?.username}/status/${_id}`} className="flex bg-white rounded p-2 mb-1">
                 {text}
-            </div>
+            </Link>
         </div>
     )
 }
-
-{/* <span className="pl-1 text-litterLightGray">
-<ReactTimeAgo date={createdAt} />
-</span> */}
 
 {/* <span className="pl-1 text-litterLightGray">{(new Date(createdAt))
     .toISOString()
