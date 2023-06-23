@@ -1,20 +1,7 @@
-import TopBar from "./TopBar.js";
-import Head from "next/head.js";
-
-export default function Layout({ children }) {
-  return (
-    <>
-        <Head>
-            <title>Litter</title>
-        </Head>
-        <TopBar />
-        <div style={{
-            display: "flex",
-            justifyContent: "center",
-            padding: "20px"
-        }}>
+export default function Layout({children}) {
+    return (
+        <div className="max-w-xl mx-auto bg-litterWhite min-h-screen p-6">
             {children}
         </div>
-    </>
-  );
+    )
 }

@@ -7,6 +7,7 @@ import PostForm from '../components/PostForm';
 import axios from 'axios';
 import {useRouter} from "next/router";
 import PostContent from '../components/PostContent';
+import Layout from '../components/Layout';
 
 export default function Home() {
     const {data:session} = useSession();
@@ -38,7 +39,7 @@ export default function Home() {
     }
 
     return (
-      <div className="max-w-xl mx-auto bg-litterWhite min-h-screen p-6">
+      <Layout>
         <div className="flex flex-row items-center mb-4">
           <UserIcon color={userInfo.userColor}/>
           <h1 className="text-2xl font-bold p-2">{userInfo.username}</h1>
@@ -49,6 +50,6 @@ export default function Home() {
             <PostContent key={post._id} {...post}/>
           ))}
         </div>
-      </div>
+      </Layout>
     )
   }
