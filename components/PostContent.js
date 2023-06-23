@@ -1,5 +1,6 @@
 import ReactTimeAgo from "react-time-ago";
 import Link from "next/link";
+import PostButtons from "./PostButtons";
 
 export default function PostContent({text, createdAt, author, _id, big=false }) {
     return (
@@ -35,6 +36,7 @@ export default function PostContent({text, createdAt, author, _id, big=false }) 
                     {text}
                 </div>
             )}
+            <PostButtons/>
         </div>
     )
 }
