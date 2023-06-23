@@ -4,17 +4,19 @@ import axios from "axios"
 export default function PostButtons({
     likesCount:likesCountDefault=0,
     likedByUser:likedByUserDefault=false,
-    id
+    id,
 }) {
     const [likesCount, setLikesCount] = useState(likesCountDefault)
     const [likedByUser, setLikedByUser] = useState(likedByUserDefault)
 
     async function toggleLike() {
         const response = await axios.post('/api/likes', {id})
-        if (response.data.isLiked) {
+        if (response.data?.like) {
             setLikesCount(prev => prev + 1)
+            setLikedByUser(true)
         } else {
             setLikesCount(prev => prev - 1)
+            setLikedByUser(false)
         }
     }
 

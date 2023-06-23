@@ -13,11 +13,13 @@ export default function Home() {
     const {data:session} = useSession();
     const {userInfo, status:userInfoStatus} = useUserInfo();
     const [posts, setPosts] = useState([]);
+    const [idsLikedByUser, setIdsLikedByUser] = useState([])
     const router = useRouter();
     
     function fetchHomePosts() {
       axios.get('/api/posts').then(response => {
-        setPosts(response.data)
+        setPosts(response.data.posts)
+        setIdsLikedByUser(response.data.idsLikedByUser)
       })
     }
 
@@ -47,7 +49,7 @@ export default function Home() {
         <PostForm onPost={() => {fetchHomePosts()}}/>
         <div className="mt-6">
           {posts.length > 0 && posts.map(post => (
-            <PostContent key={post._id} {...post}/>
+            <PostContent key={post._id} {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
           ))}
         </div>
       </Layout>
