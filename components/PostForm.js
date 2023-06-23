@@ -15,16 +15,16 @@ export default function PostForm({onPost}) {
 
     return (
         <form onSubmit={handlePostSubmit}>
-            <div className="grow rounded-lg border border-litterWhite overflow-hidden h-20">
+            <div className="grow rounded-lg border border-litterBorder overflow-hidden h-20 mb-2">
                 <textarea
-                className="w-full p-2 bg-transparent text-litterWhite resize-none m-0 h-full"
-                placeholder={'write some garbage'}
+                className="w-full p-2 bg-litterLightGray placeholder-white text-white focus:outline-0 resize-none m-0 h-full"
+                placeholder={'put some garbage'}
                 value={text}
                 onChange={e => setText(e.target.value)}
                 />
             </div>
             <div className="text-right">
-                <button className="bg-litterBlue px-5 py-2 rounded-full" type="submit">
+                <button className="bg-litterBlue px-5 py-2 border border-litterBorder text-white rounded-full" type="submit">
                     submit
                 </button>
             </div>

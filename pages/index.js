@@ -38,13 +38,13 @@ export default function Home() {
     }
 
     return (
-      <div className="max-w-lg mx-auto border-l border-r border-litterWhite min-h-screen p-4">
-        <div className="flex flex-row items-center">
+      <div className="max-w-xl mx-auto bg-litterWhite min-h-screen p-6">
+        <div className="flex flex-row items-center mb-4">
           <UserIcon color={userInfo.userColor}/>
-          <h1 className="text-lg font-bold p-2">{userInfo.username}</h1>
+          <h1 className="text-2xl font-bold p-2">{userInfo.username}</h1>
         </div>
         <PostForm onPost={() => {fetchHomePosts()}}/>
-        <div>
+        <div className="mt-6">
           {posts.length > 0 && posts.map(post => (
             <PostContent key={post._id} {...post}/>
           ))}
