@@ -36,7 +36,7 @@ export default function PostContent({text, createdAt, author, _id, big=false }) 
                     {text}
                 </div>
             )}
-            <PostButtons/>
+            <PostButtons id={_id}/>
         </div>
     )
 }
