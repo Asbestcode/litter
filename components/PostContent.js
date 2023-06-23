@@ -11,9 +11,16 @@ export default function PostContent({text, createdAt, author, _id, big=false }) 
                     · <ReactTimeAgo date={Date.parse(createdAt)} />
                 </span>
             </div>
-            <Link href={`/${author?.username}/status/${_id}`} className="flex bg-white rounded p-2 mb-1">
-                {text}
-            </Link>
+            {!big && (
+                <Link href={`/${author?.username}/status/${_id}`} className="flex bg-white rounded p-2 mb-1">
+                    {text}
+                </Link>
+            )}
+            {big && (
+                <div className="flex bg-white rounded p-2 mb-1">
+                    {text}
+                </div>
+            )}
         </div>
     )
 }
