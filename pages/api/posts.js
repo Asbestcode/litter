@@ -11,11 +11,14 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
         const {id} = req.query;
         if (id) {
-            const post = await Post.findById(id).populate('author');
+            const post = await Post.findById(id).
+                populate('author')
+                populate('comments');
             res.json(post)
         } else {
             const posts = await Post.find()
                 .populate('author')
+                .populate('comments')
                 .sort({createdAt: -1})
                 .limit(20)
                 .exec();
