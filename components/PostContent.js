@@ -4,7 +4,7 @@ import PostButtons from "./PostButtons";
 
 export default function PostContent({text, createdAt, author, _id, big=false, likesCount, likedByUser}) {
     return (
-        <div className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+        <div className="">
             <div className="mb-2">
                 <Link href={'/'+author?.username} className="font-bold">{author?.username}</Link>
                 {!big && (

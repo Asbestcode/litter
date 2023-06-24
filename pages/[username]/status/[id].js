@@ -25,24 +25,31 @@ export default function PostPage() {
 
     return (
         <Layout>
-            {post && (
+            <div className="">
+                <Link href={'/'}>
+                    <div className="flex items-center mb-4 cursor-pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        </svg>
+                        <span className="font-bold text-lg">Garbage</span>
+                    </div>
+                </Link>
+            </div>
+            <div className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+                {!!post?._id && (
+                    <div className="mb-3">
+                        <PostContent {...post} big/>
+                    </div>
+                )}
+                {!!userInfo && (
+                    <div className="mb-3">
+                        <PostForm onPost={() => {}} compact/>
+                    </div>
+                )}
                 <div className="">
-                    <Link href={'/'}>
-                        <div className="flex items-center mb-4 cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                            </svg>
-                            <span className="font-bold text-lg">Garbage</span>
-                        </div>
-                    </Link>
-                    <PostContent {...post} big/>
+                    Replies go here
                 </div>
-            )}
-            {!!userInfo && (
-                <div className="">
-                    <PostForm onPost={() => {}} compact/>
-                </div>
-            )}
+            </div>
         </Layout>
     )
 }

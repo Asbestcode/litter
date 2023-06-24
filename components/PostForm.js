@@ -37,7 +37,7 @@ export default function PostForm({onPost, compact}) {
                     <div className="grow rounded-lg border border-litterBorder h-11 overflow-hidden">
                         <textarea
                             className="w-full p-2 bg-litterLightGray placeholder-white text-white focus:outline-0 resize-none h-full m-0 no-scrollbar"
-                            placeholder={'put some garbage'}
+                            placeholder={'reply some garbage'}
                             value={text}
                             onChange={e => setText(e.target.value)}
                         />
