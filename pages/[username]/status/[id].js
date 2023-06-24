@@ -11,6 +11,8 @@ export default function PostPage() {
     const router = useRouter();
     const {id} = router.query;
     const [post, setPost] = useState();
+    const [replies, setReplies] = useState([]);
+    const [repliesLikedByUser, setRepliesLikedByUser] = useState([])
     const {userInfo} = useUserInfo();
 
     useEffect(() => {
@@ -20,6 +22,11 @@ export default function PostPage() {
         axios.get('/api/posts?id='+id)
             .then(response => {
                 setPost(response.data)
+            })
+        axios.get('/api/posts?parent='+id)
+            .then(response => {
+                setReplies(response.data.posts);
+                setRepliesLikedByUser(response.data.idsLikedByUser);
             })
     }, [id]);
 
@@ -51,7 +58,11 @@ export default function PostPage() {
                     </div>
                 )}
                 <div className="">
-                    Replies go here
+                    {replies.length > 0 && replies.map(reply => (
+                        <div key={reply._id}>
+                            <PostContent {...reply} likedByUser={repliesLikedByUser.includes(reply._id)}/>
+                        </div>
+                    ))}
                 </div>
             </div>
         </Layout>

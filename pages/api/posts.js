@@ -15,7 +15,8 @@ export default async function handler(req, res) {
                 populate('author')
             res.json(post)
         } else {
-            const posts = await Post.find({parent: null})
+            const parent = req.query.parent || null;
+            const posts = await Post.find({parent})
                 .populate('author')
                 .sort({createdAt: -1})
                 .limit(20)

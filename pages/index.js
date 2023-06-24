@@ -17,8 +17,8 @@ export default function Home() {
     const [idsLikedByUser, setIdsLikedByUser] = useState([])
     const router = useRouter();
     
-    function fetchHomePosts() {
-      axios.get('/api/posts').then(response => {
+    async function fetchHomePosts() {
+      await axios.get('/api/posts').then(response => {
         setPosts(response.data.posts)
         setIdsLikedByUser(response.data.idsLikedByUser)
       })
@@ -30,9 +30,7 @@ export default function Home() {
     }
 
     useEffect(() => {
-      if(session) {
         fetchHomePosts();
-      }
     }, []);
 
     if (userInfoStatus === 'loading') {
