@@ -4,7 +4,7 @@ const PostSchema = new Schema({
   author: {type:mongoose.Types.ObjectId, ref: 'User'},
   text: String,
   likesCount: {type:Number, default: 0},
-  comments: {type: [Schema.Types.ObjectId], ref: 'Comment'},
+  parent: {type:mongoose.Types.ObjectId, ref: 'Post'},
 }, {
   timestamps: true,
 });
@@ -12,3 +12,5 @@ const PostSchema = new Schema({
 
 const Post = models?.Post || model('Post', PostSchema);
 export default Post;
+
+// comments: {type: [Schema.Types.ObjectId], ref: 'Comment'},

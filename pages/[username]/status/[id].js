@@ -43,7 +43,11 @@ export default function PostPage() {
                 )}
                 {!!userInfo && (
                     <div className="mb-3">
-                        <PostForm onPost={() => {}} compact/>
+                        <PostForm 
+                            onPost={() => {}}
+                            parent={id}
+                            compact
+                        />
                     </div>
                 )}
                 <div className="">

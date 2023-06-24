@@ -13,12 +13,10 @@ export default async function handler(req, res) {
         if (id) {
             const post = await Post.findById(id).
                 populate('author')
-                populate('comments');
             res.json(post)
         } else {
-            const posts = await Post.find()
+            const posts = await Post.find({parent: null})
                 .populate('author')
-                .populate('comments')
                 .sort({createdAt: -1})
                 .limit(20)
                 .exec();
@@ -35,10 +33,11 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
-        const {text} = req.body;
+        const {text, parent} = req.body;
         const post = await Post.create({
           author:session.user.id,
           text,
+          parent,
         });
         res.json(post);
     }

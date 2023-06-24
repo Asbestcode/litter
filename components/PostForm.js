@@ -1,12 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function PostForm({onPost, compact}) {
+export default function PostForm({onPost, parent, compact}) {
     const [text,setText] = useState('');
 
     async function handlePostSubmit(e) {
         e.preventDefault();
-        await axios.post('/api/posts', {text});
+        await axios.post('/api/posts', {text, parent});
         setText('');
         if(onPost) {
             onPost()
