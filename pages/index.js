@@ -1,6 +1,6 @@
 import UsernameForm from '../components/UsernameForm';
 import UserIcon from '../components/UserIcon';
-import {useSession} from 'next-auth/react';
+import {signOut, useSession} from 'next-auth/react';
 import useUserInfo from "../hooks/useUserInfo";
 import {useEffect, useState} from 'react';
 import PostForm from '../components/PostForm';
@@ -10,8 +10,9 @@ import PostContent from '../components/PostContent';
 import Layout from '../components/Layout';
 
 export default function Home() {
+
     const {data:session} = useSession();
-    const {userInfo, status:userInfoStatus} = useUserInfo();
+    const {userInfo, setUserInfo, status:userInfoStatus} = useUserInfo();
     const [posts, setPosts] = useState([]);
     const [idsLikedByUser, setIdsLikedByUser] = useState([])
     const router = useRouter();
@@ -23,21 +24,28 @@ export default function Home() {
       })
     }
 
+    async function logOut() {
+      setUserInfo(null);
+      await signOut();
+    }
+
     useEffect(() => {
-      fetchHomePosts()
+      if(session) {
+        fetchHomePosts();
+      }
     }, []);
 
     if (userInfoStatus === 'loading') {
       return 'loading user info';
     }
 
-    if (!userInfo) {
-      router.push('/login');
-      return 'loading user info';
+    if (userInfo && !userInfo?.username) {
+      return <UsernameForm />;
     }
 
-    if (!userInfo?.username) {
-      return <UsernameForm />;
+    if (!userInfo) {
+      router.push('/login');
+      return 'no user info';
     }
 
     return (
@@ -52,6 +60,11 @@ export default function Home() {
             <PostContent key={post._id} {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
           ))}
         </div>
+        {userInfo && (
+          <div className=''>
+            <button onClick={logOut} className='bg-white border border-black text-black px-5 py-2 rounded-full'>Logout</button>
+          </div>
+        )}
       </Layout>
     )
   }
