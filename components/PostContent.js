@@ -2,7 +2,10 @@ import ReactTimeAgo from "react-time-ago";
 import Link from "next/link";
 import PostButtons from "./PostButtons";
 
-export default function PostContent({text, createdAt, author, _id, big=false, likesCount, likedByUser}) {
+export default function PostContent({
+    text, createdAt, author, _id, 
+    likesCount, likedByUser, commentsCount,
+    big=false}) {
     return (
         <div className="">
             <div className="mb-2">
@@ -36,7 +39,12 @@ export default function PostContent({text, createdAt, author, _id, big=false, li
                     {text}
                 </div>
             )}
-            <PostButtons id={_id} likesCount={likesCount} likedByUser={likedByUser}/>
+            <PostButtons 
+                id={_id} 
+                likesCount={likesCount} 
+                likedByUser={likedByUser}
+                commentsCount={commentsCount}
+            />
         </div>
     )
 }
