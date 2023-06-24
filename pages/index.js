@@ -52,6 +52,9 @@ export default function Home() {
             <PostContent key={post._id} {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
           ))}
         </div>
+        <div className=''>
+          <button className='bg-white border border-black text-black px-5 py-2 rounded-full'>Logout</button>
+        </div>
       </Layout>
     )
   }
