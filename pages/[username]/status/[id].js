@@ -2,13 +2,16 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PostContent from "../../../components/PostContent";
+import PostForm from "@/components/PostForm";
 import Layout from "../../../components/Layout";
 import Link from "next/link";
+import useUserInfo from "@/hooks/useUserInfo";
 
 export default function PostPage() {
     const router = useRouter();
     const {id} = router.query;
     const [post, setPost] = useState();
+    const {userInfo} = useUserInfo();
 
     useEffect(() => {
         if(!id) {
@@ -19,8 +22,6 @@ export default function PostPage() {
                 setPost(response.data)
             })
     }, [id]);
-
-    // triggervercel
 
     return (
         <Layout>
@@ -35,6 +36,11 @@ export default function PostPage() {
                         </div>
                     </Link>
                     <PostContent {...post} big/>
+                </div>
+            )}
+            {!!userInfo && (
+                <div className="">
+                    <PostForm onPost={() => {}} compact/>
                 </div>
             )}
         </Layout>
