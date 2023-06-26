@@ -1,14 +1,15 @@
 import { FileDrop } from "react-file-drop"
 import { useState } from "react";
 import Image from "next/image";
+import { PulseLoader } from "react-spinners";
 
 export default function CoverPicture({src}) {
     const [isFileNearby, setIsFileNearby] = useState(false);
     const [isFileOver, setIsFileOver] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
   let extraClasses = '';
-  if (isFileNearby && !isFileOver) extraClasses += ' bg-blue-500 opacity-40';
-  if (isFileOver) extraClasses += ' bg-blue-500 opacity-90';
+  if (isFileNearby && !isFileOver) extraClasses += ' bg-green-500 opacity-60';
+  if (isFileOver) extraClasses += ' bg-green-500';
     // "absolute top-0 right-0 bottom-0 left-0 bg-red-500 opacity-50"
 
     function updateImage(files, e) {
@@ -42,12 +43,12 @@ export default function CoverPicture({src}) {
                     <div className={'absolute inset-0 '+extraClasses}></div>   
                     {isUploading && (    
                         <div className="absolute inset-0 flex items-center justify-center" style={{backgroundColor:'rgba(48, 140, 216,0.9)', color: 'white'}}> 
-                            Loading
+                            <PulseLoader size={12} color={'#fff'}/>
                         </div>
                     )}
                     <div className={"cover flex items-center overflow-hidden "}>
-                        {src && (<img src={src} className="w-full" alt=""/>)}
-                        {!src && (<div style={{height:'15rem',}} className="w-full flex justify-center items-center">drag & drop image!</div>)}
+                        {src && (<img src={src} style={{height:'15rem'}} className="w-full" alt=""/>)}
+                        {!src && (<div style={{height:'15rem'}} className="w-full flex justify-center items-center">drag & drop image!</div>)}
                     </div>
                 </div>
             </FileDrop>
