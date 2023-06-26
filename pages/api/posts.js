@@ -13,10 +13,12 @@ export default async function handler(req, res) {
         if (id) {
             const post = await Post.findById(id).
                 populate('author')
-            res.json(post)
+            return res.json(post)
         } else {
             const parent = req.query.parent || null;
-            const posts = await Post.find({parent})
+            const author = req.query.author;
+            const searchFilter = author ? {author} : {parent}
+            const posts = await Post.find(searchFilter)
                 .populate('author')
                 .sort({createdAt: -1})
                 .limit(20)
@@ -26,7 +28,7 @@ export default async function handler(req, res) {
                 post: posts.map(item => item._id)
             })
             const idsLikedByUser = postsLikedByUser.map(item => item.post);
-            res.json({
+            return res.json({
                 posts,
                 idsLikedByUser
             })
@@ -45,6 +47,6 @@ export default async function handler(req, res) {
             parentPost.commentsCount = await Post.countDocuments({parent});
             await parentPost.save();
         }
-        res.json(post);
+        return res.json(post);
     }
 }

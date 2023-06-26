@@ -44,6 +44,7 @@ export default function PostContent({
                 likesCount={likesCount} 
                 likedByUser={likedByUser}
                 commentsCount={commentsCount}
+                username={author?.username}
             />
         </div>
     )

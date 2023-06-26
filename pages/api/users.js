@@ -12,11 +12,15 @@ export default async function handle(req, res) {
         const name = userData.name;
         const color = userData.color;
         await User.findByIdAndUpdate(session.user.id, {username: name, userColor: color});
-        res.json('ok');
+        return res.json('ok');
     }
     if (req.method === 'GET') {
-        const id = req.query.id;
-        const user = await User.findById(id)
-        res.json({user})
+        const {id, username} = req.query;
+        if (id) {
+            const user = await User.findById(id)
+            return res.json({user})
+        }
+        const user = await User.findOne({id, username})
+        return res.json({user})
     }
 }

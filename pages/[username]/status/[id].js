@@ -6,19 +6,17 @@ import PostForm from "@/components/PostForm";
 import Layout from "../../../components/Layout";
 import Link from "next/link";
 import useUserInfo from "@/hooks/useUserInfo";
+import TopNavigationLink from "@/components/TopNavigationLink";
 
 export default function PostPage() {
     const router = useRouter();
     const {id} = router.query;
     const [post, setPost] = useState();
     const [replies, setReplies] = useState([]);
-    const [repliesLikedByUser, setRepliesLikedByUser] = useState([])
+    const [repliesLikedByUser, setRepliesLikedByUser] = useState([]);
     const {userInfo} = useUserInfo();
 
-    useEffect(() => {
-        if(!id) {
-            return;
-        }
+    function fetchData() {
         axios.get('/api/posts?id='+id)
             .then(response => {
                 setPost(response.data)
@@ -28,30 +26,28 @@ export default function PostPage() {
                 setReplies(response.data.posts);
                 setRepliesLikedByUser(response.data.idsLikedByUser);
             })
+    }
+
+    useEffect(() => {
+        if(!id) {
+            return;
+        }
+        fetchData();
     }, [id]);
 
     return (
         <Layout>
-            <div className="">
-                <Link href={'/'}>
-                    <div className="flex items-center mb-4 cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                        </svg>
-                        <span className="font-bold text-lg">Garbage</span>
-                    </div>
-                </Link>
-            </div>
-            <div className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+            <TopNavigationLink/>
+            <div className="flex flex-col mb-6">
                 {!!post?._id && (
-                    <div className="mb-3">
+                    <div className="flex flex-col mb-4 rounded-lg py-2 px-3 border border-litterBorder">
                         <PostContent {...post} big/>
                     </div>
                 )}
                 {!!userInfo && (
-                    <div className="mb-3">
+                    <div className="mb-8">
                         <PostForm 
-                            onPost={() => {}}
+                            onPost={fetchData}
                             parent={id}
                             compact
                         />
@@ -59,7 +55,7 @@ export default function PostPage() {
                 )}
                 <div className="">
                     {replies.length > 0 && replies.map(reply => (
-                        <div key={reply._id}>
+                        <div key={reply._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
                             <PostContent {...reply} likedByUser={repliesLikedByUser.includes(reply._id)}/>
                         </div>
                     ))}

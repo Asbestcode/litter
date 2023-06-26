@@ -30,8 +30,11 @@ export default function Home() {
     }
 
     useEffect(() => {
+      if(!session) {
+        return
+      }
         fetchHomePosts();
-    }, []);
+    }, [session]);
 
     if (userInfoStatus === 'loading') {
       return 'loading user info';
