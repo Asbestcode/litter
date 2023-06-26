@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { PulseLoader } from "react-spinners";
 
-export default function CoverPicture({src}) {
+export default function CoverPicture({src, onChange}) {
     const [isFileNearby, setIsFileNearby] = useState(false);
     const [isFileOver, setIsFileOver] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
@@ -24,7 +24,7 @@ export default function CoverPicture({src}) {
             body: data,
         }).then(async response => {
             const json = await response.json();
-            const cover = json.user.cover;
+            onChange(json.src);
             setIsUploading(false);
         })
 

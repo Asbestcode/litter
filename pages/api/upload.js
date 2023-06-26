@@ -41,7 +41,7 @@ export default async function handle(req, res) {
     //   }
 
       fs.unlinkSync(fileInfo.path);
-      return res.json({err, data, fileInfo, user});
+      return res.json({err, data, fileInfo, user, src:data.Location});
     });
   });
 }

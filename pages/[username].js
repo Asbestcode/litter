@@ -35,6 +35,10 @@ export default function UserPage() {
             })
     }, [profileInfo])
 
+    function updateUserImage(type, src) {
+        setProfileInfo(prev => ({...prev,[type]:src}));
+    }
+
     return (
         <Layout>
             {!!profileInfo && (
@@ -42,7 +46,9 @@ export default function UserPage() {
                     <div className="">
                         <TopNavigationLink navTitle={profileInfo.username}/>
                     </div>
-                    <CoverPicture src={profileInfo.cover}/>
+                    <CoverPicture 
+                        src={profileInfo.cover} 
+                        onChange={src => updateUserImage('cover',src)}/>
                     <div className="flex justify-between mb-14">
                         <div className="relative ml-5">
                             <div className="flex items-end absolute -top-14">
