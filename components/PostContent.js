@@ -2,9 +2,12 @@ import ReactTimeAgo from "react-time-ago";
 import Link from "next/link";
 import PostButtons from "./PostButtons";
 
-export default function PostContent({text, createdAt, author, _id, big=false, likesCount, likedByUser}) {
+export default function PostContent({
+    text, createdAt, author, _id, 
+    likesCount, likedByUser, commentsCount,
+    big=false}) {
     return (
-        <div className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+        <div className="">
             <div className="mb-2">
                 <Link href={'/'+author?.username} className="font-bold">{author?.username}</Link>
                 {!big && (
@@ -36,7 +39,13 @@ export default function PostContent({text, createdAt, author, _id, big=false, li
                     {text}
                 </div>
             )}
-            <PostButtons id={_id} likesCount={likesCount} likedByUser={likedByUser}/>
+            <PostButtons 
+                id={_id} 
+                likesCount={likesCount} 
+                likedByUser={likedByUser}
+                commentsCount={commentsCount}
+                username={author?.username}
+            />
         </div>
     )
 }

@@ -20,10 +20,10 @@ export default async function handle(req, res) {
     if (existingLike) {
         await existingLike.deleteOne({author: userId, post: postId});
         await updateLikesCount(postId)
-        res.json(null)
+        return res.json(null)
     } else {
         const like = await Like.create({author: userId, post: postId})
         await updateLikesCount(postId);
-        res.json({like})
+        return res.json({like})
     }
 }

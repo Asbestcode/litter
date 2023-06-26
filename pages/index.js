@@ -17,8 +17,8 @@ export default function Home() {
     const [idsLikedByUser, setIdsLikedByUser] = useState([])
     const router = useRouter();
     
-    function fetchHomePosts() {
-      axios.get('/api/posts').then(response => {
+    async function fetchHomePosts() {
+      await axios.get('/api/posts').then(response => {
         setPosts(response.data.posts)
         setIdsLikedByUser(response.data.idsLikedByUser)
       })
@@ -30,10 +30,11 @@ export default function Home() {
     }
 
     useEffect(() => {
-      if(session) {
-        fetchHomePosts();
+      if(!session) {
+        return
       }
-    }, []);
+        fetchHomePosts();
+    }, [session]);
 
     if (userInfoStatus === 'loading') {
       return 'loading user info';
@@ -57,7 +58,9 @@ export default function Home() {
         <PostForm onPost={() => {fetchHomePosts()}}/>
         <div className="mt-6">
           {posts.length > 0 && posts.map(post => (
-            <PostContent key={post._id} {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
+            <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+              <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
+            </div>
           ))}
         </div>
         {userInfo && (
