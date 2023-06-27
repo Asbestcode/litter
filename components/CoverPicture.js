@@ -10,7 +10,6 @@ export default function CoverPicture({src, onChange}) {
   let extraClasses = '';
   if (isFileNearby && !isFileOver) extraClasses += ' bg-green-500 opacity-60';
   if (isFileOver) extraClasses += ' bg-green-500';
-    // "absolute top-0 right-0 bottom-0 left-0 bg-red-500 opacity-50"
 
     function updateImage(files, e) {
         e.preventDefault();
@@ -58,5 +57,4 @@ export default function CoverPicture({src, onChange}) {
 
 
 // <div className="absolute w-full h-full flex justify-center items-center bg-black text-white">
-    
 // </div>
