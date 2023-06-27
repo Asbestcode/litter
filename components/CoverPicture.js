@@ -20,13 +20,15 @@ export default function CoverPicture({src, onChange}) {
         data.append('cover', files[0]);
         fetch('/api/upload', {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: data,
         }).then(async response => {
             const json = await response.json();
             onChange(json.src);
             setIsUploading(false);
         })
-
     }
 
     return (
