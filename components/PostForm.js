@@ -16,7 +16,7 @@ export default function PostForm({onPost, parent, compact}) {
     return (
         <form onSubmit={handlePostSubmit}>
             {!compact && (
-                <div>
+                <div className="ml-4 mr-4">
                     <div className="grow rounded-lg border border-litterBorder overflow-hidden h-20 mb-2">
                         <textarea
                             className="w-full p-2 bg-litterLightGray placeholder-white text-white focus:outline-0 resize-none m-0 h-full"

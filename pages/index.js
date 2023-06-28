@@ -1,4 +1,5 @@
 import UsernameForm from '../components/UsernameForm';
+import TopNavigationLink from '@/components/TopNavigationLink';
 import UserIcon from '../components/UserIcon';
 import {signOut, useSession} from 'next-auth/react';
 import useUserInfo from "../hooks/useUserInfo";
@@ -51,12 +52,11 @@ export default function Home() {
 
     return (
       <Layout>
-        <div className="flex flex-row items-center mb-4">
-          <UserIcon color={userInfo.userColor}/>
-          <h1 className="text-2xl font-bold p-2">{userInfo.username}</h1>
+        <div className="">
+            <TopNavigationLink navTitle={userInfo.username}/>
         </div>
         <PostForm onPost={() => {fetchHomePosts()}}/>
-        <div className="mt-6">
+        <div className="mt-6 ml-4 mr-4">
           {posts.length > 0 && posts.map(post => (
             <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
               <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
@@ -64,7 +64,7 @@ export default function Home() {
           ))}
         </div>
         {userInfo && (
-          <div className=''>
+          <div className="ml-4">
             <button onClick={logOut} className='bg-white border border-black text-black px-5 py-2 rounded-full'>Logout</button>
           </div>
         )}

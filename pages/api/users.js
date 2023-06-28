@@ -1,5 +1,6 @@
 import { initMongoose } from "../../lib/mongoose"
 import User from "../../models/User";
+import Follower from "../../models/Follower";
 import {getServerSession} from "next-auth";
 import {authOptions} from "./auth/[...nextauth]";
 
@@ -15,12 +16,14 @@ export default async function handle(req, res) {
         return res.json('ok');
     }
     if (req.method === 'GET') {
-        const {id, username} = req.query;
-        if (id) {
-            const user = await User.findById(id)
-            return res.json({user})
-        }
-        const user = await User.findOne({id, username})
-        return res.json({user})
+        const {id,username} = req.query;
+        const user = id
+          ? await User.findById(id)
+          : await User.findOne({username});
+        const follow = await Follower.findOne({
+          who:session.user.id,
+          whom:user._id
+        });
+        return res.json({user, follow});
     }
 }
