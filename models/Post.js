@@ -12,5 +12,3 @@ const PostSchema = new Schema({
 
 const Post = models?.Post || model('Post', PostSchema);
 export default Post;
-
-// comments: {type: [Schema.Types.ObjectId], ref: 'Comment'},
