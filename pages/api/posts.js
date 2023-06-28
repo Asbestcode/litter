@@ -1,6 +1,7 @@
 import {initMongoose} from "../../lib/mongoose";
 import Post from "../../models/Post";
 import Like from "@/models/Like";
+import User from "@/models/User";
 import {getServerSession} from "next-auth";
 import {authOptions} from "./auth/[...nextauth]";
 

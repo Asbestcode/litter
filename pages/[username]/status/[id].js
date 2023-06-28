@@ -37,8 +37,8 @@ export default function PostPage() {
 
     return (
         <Layout>
-            <TopNavigationLink/>
-            <div className="flex flex-col mb-6">
+            <TopNavigationLink navTitle={post?.author?.username}/>
+            <div className="flex flex-col mb-6 ml-4 mr-4">
                 {!!post?._id && (
                     <div className="flex flex-col mb-4 rounded-lg py-2 px-3 border border-litterBorder">
                         <PostContent {...post} big/>
