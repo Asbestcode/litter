@@ -35,8 +35,6 @@ export default function PostPage() {
         fetchData();
     }, [id]);
 
-    console.log({post});
-
     return (
         <Layout>
             <TopNavigationLink navTitle={post?.author?.username}/>

@@ -5,13 +5,10 @@ import { PulseLoader } from "react-spinners";
 
 export default function CoverPicture({src, onChange, editable=false}) {
     const [isFileNearby, setIsFileNearby] = useState(false);
-    const [isFileOver, setIsFileOver] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
-  let extraClasses = '';
-  if (isFileNearby && !isFileOver) extraClasses += ' bg-green-500 opacity-60';
-  if (isFileOver) extraClasses += ' bg-green-500';
-  if (!editable) extraClasses = '';
-    // "absolute top-0 right-0 bottom-0 left-0 bg-red-500 opacity-50"
+    let extraClasses = '';
+    if (isFileNearby) extraClasses += ' bg-green-500 opacity-60';
+    if (!editable) extraClasses = '';
 
     function updateImage(files, e) {
         if (!editable) {
@@ -19,7 +16,6 @@ export default function CoverPicture({src, onChange, editable=false}) {
         }
         e.preventDefault();
         setIsFileNearby(false);
-        setIsFileOver(false);
         setIsUploading(true);
         const data = new FormData();
         data.append('cover', files[0]);
@@ -31,22 +27,19 @@ export default function CoverPicture({src, onChange, editable=false}) {
             onChange(json.src);
             setIsUploading(false);
         })
-
     }
 
     return (
         <div style={{height:'15rem', overflow:'hidden'}}>
             <FileDrop
                 onDrop={updateImage} 
-                onDragOver={() => setIsFileOver(true)}
-                onDragLeave={() => setIsFileOver(false)}
                 onFrameDragEnter={() => setIsFileNearby(true)}
                 onFrameDragLeave={() => setIsFileNearby(false)}
             >
                 <div className={"relative bg-litterBorder text-white"}>
                     <div className={'absolute inset-0 '+extraClasses}></div>   
                     {isUploading && (    
-                        <div className="absolute inset-0 flex items-center justify-center" style={{backgroundColor:'rgba(48, 140, 216,0.9)', color: 'white'}}> 
+                        <div className="absolute inset-0 flex items-center justify-center bg-green-500 opacity-60"> 
                             <PulseLoader size={12} color={'#fff'}/>
                         </div>
                     )}
