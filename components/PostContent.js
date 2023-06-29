@@ -11,37 +11,36 @@ export default function PostContent({
       if (!images?.length) {
         return '';
       }
-      return (
-        <div className="flex -mx-1">
-          {images.length > 0 && images.map(img => (
-            <div className="m-1" key={img.id}>
-              <img src={img.src} alt=""/>
-            </div>
-          ))}
-        </div>
-      );
+      if (big) {
+        return (
+          <div className="flex flex-col gap-1">
+            {images.length > 0 && images.map(img => (
+              <div className="m-1" key={img.id}>
+                <img src={img.src} alt=""/>
+              </div>
+            ))}
+          </div>
+        );
+      } else {
+        return (
+          <div className="flex -mx-1">
+            {images.length > 0 && images.map(img => (
+              <div className="m-1" key={img.id}>
+                <img src={img.src} alt=""/>
+              </div>
+            ))}
+          </div>
+        );
+      }
     }
 
     return (
         <div className="">
             <div className="mb-2">
                 <Link href={'/'+author?.username} className="font-bold">{author?.username}</Link>
-                {createdAt && !big && (
+                {createdAt && (
                     <span className="pl-1 text-litterLightGray">
                         · <ReactTimeAgo date={Date.parse(createdAt)} />
-                    </span>
-                )}
-                {createdAt && big && (
-                    <span className="pl-1 text-litterLightGray text-sm">
-                        <br/>
-                        {(new Date(createdAt))
-                            .toISOString()
-                            .replace('T', ' ')
-                            .slice(0,16)
-                            .split(' ')
-                            .reverse()
-                            .join(' ')
-                        }
                     </span>
                 )}
             </div>
@@ -49,14 +48,14 @@ export default function PostContent({
                 <Link href={`/${author?.username}/status/${_id}`} className="flex bg-white rounded p-2 mb-1">
                   <div>
                     {text}
-                    {showImages()}
+                    {showImages(big)}
                   </div>
                 </Link>
             )}
             {big && (
                 <div className="flex bg-white rounded p-2 mb-1">
                     {text}
-                    {showImages()}
+                    {showImages(big)}
                 </div>
             )}
             <PostButtons 

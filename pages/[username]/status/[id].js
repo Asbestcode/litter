@@ -45,9 +45,12 @@ export default function PostPage() {
                             <div>
                                 <PostContent {...post.parent}/>
                                 <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
-                                    <PostContent {...post}/>
+                                    <PostContent {...post} big />
                                 </div>
                             </div>
+                        )}
+                        {!post.parent && (
+                          <PostContent {...post} big />
                         )}
                     </div>
                 )}
