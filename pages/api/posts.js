@@ -27,7 +27,6 @@ export default async function handler(req, res) {
             if (!author && !parent) {
                 const userFollows = await Follower.find({source:session.user.id}).exec();
                 const idsOfPeopleUserFollows = userFollows.map(item => item.destination);
-                console.log(idsOfPeopleUserFollows);
                 searchFilter = {author:[...idsOfPeopleUserFollows, session.user.id]};
             };
             if (author) {

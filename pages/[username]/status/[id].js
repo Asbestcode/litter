@@ -38,61 +38,36 @@ export default function PostPage() {
     return (
         <Layout>
             <TopNavigationLink navTitle={post?.author?.username}/>
-            <div className="flex flex-col mb-6 ml-4 mr-4">
+            <div className="flex flex-col mb-6">
                 {!!post?._id && (
-                    <div className="flex flex-col mb-4 rounded-lg py-2 px-3 border border-litterBorder">
+                    <div className="flex flex-col mx-4 mb-4 rounded-lg py-2 px-3 border border-litterBorder">
                         {post.parent && (
                             <div>
                                 <PostContent {...post.parent}/>
                                 <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
                                     <PostContent {...post}/>
-                                    {!!userInfo && (
-                                        <div className="my-3">
-                                            <PostForm 
-                                                onPost={fetchData}
-                                                parent={id}
-                                                compact
-                                            />
-                                        </div>
-                                    )}
-                                    {replies.length > 0 && replies.map(reply => (
-                                        <div key={reply._id} className="flex flex-col mt-2 mb-3 rounded-lg py-2 px-3 border border-litterLightGray">
-                                            <PostContent {...reply} likedByUser={repliesLikedByUser.includes(reply._id)}/>
-                                        </div>
-                                    ))}
                                 </div>
-                            </div>
-                        )}
-                        {!post.parent && (
-                            <div>
-                                <PostContent {...post}/>
-                                {!!userInfo && (
-                                    <div className="my-3">
-                                        <PostForm 
-                                            onPost={fetchData}
-                                            parent={id}
-                                            compact
-                                        />
-                                    </div>
-                                )}
-                                {replies.length > 0 && replies.map(reply => (
-                                    <div key={reply._id} className="flex flex-col mt-2 mb-3 rounded-lg py-2 px-3 border border-litterLightGray">
-                                        <PostContent {...reply} likedByUser={repliesLikedByUser.includes(reply._id)}/>
-                                    </div>
-                                ))}
                             </div>
                         )}
                     </div>
                 )}
+                {!!userInfo && (
+                    <div className="mb-8">
+                        <PostForm 
+                            onPost={fetchData}
+                            parent={id}
+                            compact
+                        />
+                    </div>
+                )}
+                <div className="">
+                    {replies.length > 0 && replies.map(reply => (
+                        <div key={reply._id} className="flex flex-col mb-6 mx-4 rounded-lg py-2 px-3 border border-litterBorder">
+                            <PostContent {...reply} likedByUser={repliesLikedByUser.includes(reply._id)}/>
+                        </div>
+                    ))}
+                </div>
             </div>
         </Layout>
     )
 }
-
-
-{/* <div className="absolute inset-0 bg-litterLightGray opacity-10 pointer-events-none z-0"></div> */}
-
-{/* <div className="flex flex-col mb-4 rounded-lg py-2 px-3 border border-litterLightGray relative">
-    <PostContent {...post.parent}/>
-    <div className="absolute inset-0 bg-litterLightGray opacity-10 pointer-events-none z-0"></div>
-</div> */}
