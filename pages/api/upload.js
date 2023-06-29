@@ -33,7 +33,7 @@ export default async function handle(req, res) {
       Key: filename,
       ContentType: fileInfo.headers['content-type'],
     }, async (err,data) => {
-      if (type === 'cover' || type === 'image') {
+      if (type === 'cover') {
         await User.findByIdAndUpdate(session.user.id, {
           [type]:data.Location,
         });

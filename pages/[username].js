@@ -65,7 +65,7 @@ export default function UserPage() {
     async function toggleFollow() {
         setIsFollowing(prev => !prev);
         await axios.post('/api/followers', {
-            whom: profileInfo?._id
+            destination: profileInfo?._id
         })
     }
     
