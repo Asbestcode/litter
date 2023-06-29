@@ -128,7 +128,17 @@ export default function UserPage() {
                     <div className="ml-4 mr-4">
                         {posts?.length > 0 && posts.map(post => 
                             <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
-                                <PostContent {...post} likedByUser={postsLikedByUser.includes(post._id)}/>
+                                {post.parent && (
+                                    <div>
+                                    <PostContent {...post.parent} />
+                                    <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
+                                        <PostContent {...post} />
+                                    </div>
+                                    </div>
+                                )}
+                                {!post.parent && (
+                                    <PostContent {...post} />
+                                )}
                             </div>
                         )}
                     </div>
