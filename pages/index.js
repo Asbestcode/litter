@@ -9,13 +9,16 @@ import axios from 'axios';
 import {useRouter} from "next/router";
 import PostContent from '../components/PostContent';
 import Layout from '../components/Layout';
+import useRandomElement from '@/hooks/useRandomElement';
 
 export default function Home() {
 
     const {data:session} = useSession();
     const {userInfo, setUserInfo, status:userInfoStatus} = useUserInfo();
+    const {randomElement} = useRandomElement();
     const [posts, setPosts] = useState([]);
     const [idsLikedByUser, setIdsLikedByUser] = useState([])
+    // const [randomElement, setRandomElement] = useState();
     const router = useRouter();
     
     async function fetchHomePosts() {
@@ -24,6 +27,22 @@ export default function Home() {
         setIdsLikedByUser(response.data.idsLikedByUser)
       })
     }
+
+    // function createRandomElement (data) {
+    //   return (
+    //     <div style={{width:`${data.image.width}px`, height:`${data.image.height}px`, backgroundImage:`url(${data.image.url})`}}>
+    //       <p>{data.joke}</p>
+    //       <p>{data.weather}</p>
+    //     </div>
+    //   );
+    // }
+
+    // async function fetchRandomData() {
+    //   await axios.get('api/random').then(response => {
+    //     setRandomElement(createRandomElement(response.data));
+    //   })
+    // }
+    // const yalla = fetchRandomData()
 
     async function logOut() {
       setUserInfo(null);
@@ -34,6 +53,7 @@ export default function Home() {
       if(!session) {
         return
       }
+        // fetchRandomData();
         fetchHomePosts();
     }, [session]);
 
@@ -57,6 +77,10 @@ export default function Home() {
         </div>
         <PostForm onPost={() => {fetchHomePosts()}}/>
         <div className="mt-6 ml-4 mr-4">
+          <div>{randomElement}</div>
+          {/* {randomElement && (
+            <div dangerouslySetInnerHTML={{__html: randomElement}}></div>
+          )} */}
           {posts.length > 0 && posts.map(post => (
             <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
               {post.parent && (

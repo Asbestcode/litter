@@ -29,6 +29,10 @@ export default function UserPage() {
                 setOriginalProfileInfo(response.data.user);
                 setIsFollowing(!!response.data.follow);
             })
+        // axios.get('/api/random')
+        // .then(response => {
+        //     console.log(response.data);;
+        // })
     }, [username]);
 
     useEffect(() => {
