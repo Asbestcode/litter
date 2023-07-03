@@ -6,14 +6,14 @@ import Follower from "../../models/Follower";
 export default async function handle(req, res) {
   await initMongoose();
   const session = await getServerSession(req, res, authOptions);
-  const {whom} = req.body;
+  const {destination} = req.body;
 
-  const existingFollow = await Follower.findOne({whom, who:session.user.id});
+  const existingFollow = await Follower.findOne({destination,source:session.user.id});
   if (existingFollow) {
-    await existingFollow.deleteOne({whom, who:session.user.id});
-    return res.json(null);
+    await existingFollow.deleteOne({destination, source:session.user.id});
+    res.json(null);
   } else {
-    const follow = await Follower.create({whom, who:session.user.id});
-    return res.json(follow);
+    const f = await Follower.create({destination,source:session.user.id});
+    res.json(f);
   }
 }

@@ -35,6 +35,7 @@ export default function CoverPicture({src, onChange, editable=false}) {
                 onDrop={updateImage} 
                 onFrameDragEnter={() => setIsFileNearby(true)}
                 onFrameDragLeave={() => setIsFileNearby(false)}
+                onFrameDrop={() => setIsFileNearby(false)}
             >
                 <div className={"relative bg-litterBorder text-white"}>
                     <div className={'absolute inset-0 '+extraClasses}></div>   

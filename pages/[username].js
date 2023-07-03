@@ -18,17 +18,19 @@ export default function UserPage() {
     const [postsLikedByUser, setPostsLikedByUser] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
+    const [postCount, setPostCount] = useState()
 
     useEffect(() => {
-        if(!username){
-            return
+        if (!username) {
+          return;
         }
         axios.get('/api/users?username='+username)
-            .then(response => {
-                setProfileInfo(response.data.user);
-                setOriginalProfileInfo(response.data.user);
-                setIsFollowing(!!response.data.follow);
-            })
+          .then(response => {
+            setProfileInfo(response.data.user);
+            setOriginalProfileInfo(response.data.user);
+            setIsFollowing(!!response.data.follow);
+            setPostCount(response.data.postCount);
+          })
     }, [username]);
 
     useEffect(() => {
@@ -62,10 +64,10 @@ export default function UserPage() {
         setEditMode(false)
     }
 
-    async function toggleFollow() {
+    function toggleFollow() {
         setIsFollowing(prev => !prev);
-        await axios.post('/api/followers', {
-            whom: profileInfo?._id
+        axios.post('/api/followers', {
+          destination: profileInfo?._id,
         })
     }
     
@@ -75,9 +77,6 @@ export default function UserPage() {
         <Layout>
             {!!profileInfo && (
                 <div>
-                    <div className="">
-                        <TopNavigationLink/>
-                    </div>
                     <CoverPicture
                         editable={isUserProfile} 
                         src={profileInfo.cover} 
@@ -88,7 +87,10 @@ export default function UserPage() {
                             <div className="flex items-center absolute -top-14">
                                 <UserIcon color={profileInfo.userColor}/>
                                 {!editMode && (
-                                    <h1 className="text-2xl font-bold mt-10">{profileInfo.username}</h1>
+                                    <div>
+                                        <h1 className="text-2xl font-bold mt-10">{profileInfo.username}</h1>
+                                        <p className="flex">{postCount}</p>
+                                    </div>
                                 )}
                                 {editMode && (
                                     <input type="text" value={profileInfo.username}
@@ -128,7 +130,17 @@ export default function UserPage() {
                     <div className="ml-4 mr-4">
                         {posts?.length > 0 && posts.map(post => 
                             <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
-                                <PostContent {...post} likedByUser={postsLikedByUser.includes(post._id)}/>
+                                {post.parent && (
+                                    <div>
+                                    <PostContent {...post.parent} />
+                                    <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
+                                        <PostContent {...post} />
+                                    </div>
+                                    </div>
+                                )}
+                                {!post.parent && (
+                                    <PostContent {...post} />
+                                )}
                             </div>
                         )}
                     </div>

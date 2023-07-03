@@ -38,10 +38,20 @@ export default function PostPage() {
     return (
         <Layout>
             <TopNavigationLink navTitle={post?.author?.username}/>
-            <div className="flex flex-col mb-6 ml-4 mr-4">
+            <div className="flex flex-col mb-6">
                 {!!post?._id && (
-                    <div className="flex flex-col mb-4 rounded-lg py-2 px-3 border border-litterBorder">
-                        <PostContent {...post} big/>
+                    <div className="flex flex-col mx-4 mb-4 rounded-lg py-2 px-3 border border-litterBorder">
+                        {post.parent && (
+                            <div>
+                                <PostContent {...post.parent}/>
+                                <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
+                                    <PostContent {...post} big />
+                                </div>
+                            </div>
+                        )}
+                        {!post.parent && (
+                          <PostContent {...post} big />
+                        )}
                     </div>
                 )}
                 {!!userInfo && (
@@ -55,7 +65,7 @@ export default function PostPage() {
                 )}
                 <div className="">
                     {replies.length > 0 && replies.map(reply => (
-                        <div key={reply._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+                        <div key={reply._id} className="flex flex-col mb-6 mx-4 rounded-lg py-2 px-3 border border-litterBorder">
                             <PostContent {...reply} likedByUser={repliesLikedByUser.includes(reply._id)}/>
                         </div>
                     ))}
