@@ -15,7 +15,7 @@ export default function UserPage() {
     const [originalProfileInfo, setOriginalProfileInfo] = useState();
     const {userInfo} = useUserInfo();
     const [posts, setPosts] = useState([]);
-    // const [postsLikedByUser, setPostsLikedByUser] = useState([]);
+    const [postsLikedByUser, setPostsLikedByUser] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
     const [postCount, setPostCount] = useState()
@@ -24,7 +24,7 @@ export default function UserPage() {
       axios.get('/api/posts?author='+profileInfo._id)
         .then(response => {
           setPosts(response.data.posts);
-          // setPostsLikedByUser(response.data.idsLikedByUser)
+          setPostsLikedByUser(response.data.idsLikedByUser)
       })
     }
 
@@ -76,9 +76,6 @@ export default function UserPage() {
     }
     
     const isUserProfile = profileInfo?._id === userInfo?._id
-    console.log(router.query.username);
-    // console.log(userInfo?.username);
-    // console.log(router.query);
 
     return (
         <Layout>
@@ -141,16 +138,13 @@ export default function UserPage() {
                                 {post.parent && (
                                     <div>
                                     <PostContent {...post.parent} />
-                                    {/* likedByUser={postsLikedByUser.includes(post._id)} */}
                                     <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
-                                        <PostContent {...post} />
-                                        {/* likedByUser={postsLikedByUser.includes(post._id)} */}
+                                        <PostContent {...post} likedByUser={postsLikedByUser.includes(post._id)}/>
                                     </div>
                                     </div>
                                 )}
                                 {!post.parent && (
-                                    <PostContent {...post} />
-                                    // likedByUser={postsLikedByUser.includes(post._id)}
+                                    <PostContent {...post} likedByUser={postsLikedByUser.includes(post._id)}/>
                                 )}
                             </div>
                         )}

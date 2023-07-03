@@ -11,21 +11,22 @@ export default function PostPage() {
     const router = useRouter();
     const {id} = router.query;
     const [post, setPost] = useState();
-    // const [postLikedByUser, setPostLikedByUser] = useState();
+    const [postLikedByUser, setPostLikedByUser] = useState();
     const [replies, setReplies] = useState([]);
-    // const [repliesLikedByUser, setRepliesLikedByUser] = useState([]);
+    const [repliesLikedByUser, setRepliesLikedByUser] = useState([]);
     const {userInfo} = useUserInfo();
 
     function fetchData() {
         axios.get('/api/posts?id='+id)
             .then(response => {
                 setPost(response.data.post);
-                // setPostLikedByUser(response.data.idLikedByUser)
+                console.log(response.data.idLikedByUser);
+                setPostLikedByUser(response.data.idLikedByUser)
             })
         axios.get('/api/posts?parent='+id)
             .then(response => {
                 setReplies(response.data.posts);
-                // setRepliesLikedByUser(response.data.idsLikedByUser);
+                setRepliesLikedByUser(response.data.idsLikedByUser);
             })
     }
 
@@ -45,16 +46,13 @@ export default function PostPage() {
                         {post.parent && (
                             <div>
                                 <PostContent {...post.parent} />
-                                {/* likedByUser={repliesLikedByUser.includes(reply._id)} */}
                                 <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
-                                    <PostContent {...post} big />
-                                    {/* likedByUser={postLikedByUser} */}
+                                    <PostContent {...post} big likedByUser={postLikedByUser.includes(post._id)}/>
                                 </div>
                             </div>
                         )}
                         {!post.parent && (
-                          <PostContent {...post} big/>
-                        //   likedByUser={postLikedByUser}
+                          <PostContent {...post} big likedByUser={postLikedByUser.includes(post._id)} />
                         )}
                     </div>
                 )}
@@ -70,8 +68,7 @@ export default function PostPage() {
                 <div className="">
                     {replies.length > 0 && replies.map(reply => (
                         <div key={reply._id} className="flex flex-col mb-6 mx-4 rounded-lg py-2 px-3 border border-litterBorder">
-                            <PostContent {...reply} />
-                            {/* likedByUser={repliesLikedByUser.includes(reply._id)} */}
+                            <PostContent {...reply} likedByUser={repliesLikedByUser.includes(reply._id)}/>
                         </div>
                     ))}
                 </div>

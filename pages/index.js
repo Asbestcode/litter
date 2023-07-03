@@ -1,9 +1,7 @@
 import UsernameForm from '../components/UsernameForm';
-import TopNavigationLink from '@/components/TopNavigationLink';
 import {useSession} from 'next-auth/react';
 import useUserInfo from "../hooks/useUserInfo";
 import {useEffect, useState} from 'react';
-import PostForm from '../components/PostForm';
 import axios from 'axios';
 import {useRouter} from "next/router";
 import PostContent from '../components/PostContent';
@@ -15,7 +13,7 @@ export default function Home() {
     const {data:session} = useSession();
     const {userInfo, status:userInfoStatus} = useUserInfo();
     const [posts, setPosts] = useState([]);
-    // const [idsLikedByUser, setIdsLikedByUser] = useState([])
+    const [idsLikedByUser, setIdsLikedByUser] = useState([])
     const [modalVisible, setModalVisible] = useState(false);
     const setDaysLeft = useDaysLeftStore((state) => state.setDaysLeft);
     const router = useRouter();
@@ -38,7 +36,7 @@ export default function Home() {
     async function fetchHomePosts() {
       await axios.get('/api/posts').then(response => {
         setPosts(response.data.posts)
-        // setIdsLikedByUser(response.data.idsLikedByUser)
+        setIdsLikedByUser(response.data.idsLikedByUser)
       })
     }
 
@@ -72,20 +70,17 @@ export default function Home() {
           <div className="mt-6 ml-4 mr-4">
             <h1 className='font-bold text-2xl mb-8'>Check out that garbage</h1>
             {posts.length > 0 && posts.map(post => (
-              <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+              <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterLightGray">
                 {post.parent && (
                   <div>
                     <PostContent {...post.parent} />
-                    {/* likedByUser={idsLikedByUser.includes(post._id)} */}
                     <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
-                      <PostContent {...post} />
-                      {/* likedByUser={idsLikedByUser.includes(post._id)} */}
+                      <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
                     </div>
                   </div>
                 )}
                 {!post.parent && (
-                  <PostContent {...post} />
-                  // likedByUser={idsLikedByUser.includes(post._id)}
+                  <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)} />
                 )}
               </div>
             ))}
@@ -94,3 +89,17 @@ export default function Home() {
       </Layout>
     )
   }
+
+
+
+{/* {post.parent && (
+  <div>
+    <PostContent {...post.parent} likedByUser={idsLikedByUser.includes(post._id)}/>
+    <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
+      <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
+    </div>
+  </div>
+)}
+{!post.parent && (
+  <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
+)} */}
