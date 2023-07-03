@@ -15,7 +15,7 @@ export default function Home() {
     const {data:session} = useSession();
     const {userInfo, status:userInfoStatus} = useUserInfo();
     const [posts, setPosts] = useState([]);
-    const [idsLikedByUser, setIdsLikedByUser] = useState([])
+    // const [idsLikedByUser, setIdsLikedByUser] = useState([])
     const [modalVisible, setModalVisible] = useState(false);
     const setDaysLeft = useDaysLeftStore((state) => state.setDaysLeft);
     const router = useRouter();
@@ -38,7 +38,7 @@ export default function Home() {
     async function fetchHomePosts() {
       await axios.get('/api/posts').then(response => {
         setPosts(response.data.posts)
-        setIdsLikedByUser(response.data.idsLikedByUser)
+        // setIdsLikedByUser(response.data.idsLikedByUser)
       })
     }
 
@@ -76,13 +76,16 @@ export default function Home() {
                 {post.parent && (
                   <div>
                     <PostContent {...post.parent} />
+                    {/* likedByUser={idsLikedByUser.includes(post._id)} */}
                     <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
-                      <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
+                      <PostContent {...post} />
+                      {/* likedByUser={idsLikedByUser.includes(post._id)} */}
                     </div>
                   </div>
                 )}
                 {!post.parent && (
-                  <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
+                  <PostContent {...post} />
+                  // likedByUser={idsLikedByUser.includes(post._id)}
                 )}
               </div>
             ))}

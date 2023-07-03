@@ -12,7 +12,7 @@ export default function SideBar() {
     await signOut();
   }
 
-  const profilePath = router.query.username === userInfo?.username;
+  const profilePath = router.pathname === '/[username]';
 
   return (
       <div className='absolute left-10 top-10 bg-litterWhite p-4 rounded-md flex flex-col gap-4'>

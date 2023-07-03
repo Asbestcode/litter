@@ -18,8 +18,16 @@ export default async function handler(req, res) {
                 .populate({
                     path: 'parent',
                     populate: 'author',
-                })
-            return res.json(post)
+                });
+            let postLikedByUser
+            if (session) {
+                postLikedByUser = await Like.find({
+                    author:session.user.id,
+                    post:post._id,
+                });
+            }
+            let idLikedByUser = postLikedByUser.map(like => like.post);
+            return res.json({post, idLikedByUser})
         } else {
             const parent = req.query.parent || null;
             const author = req.query.author;

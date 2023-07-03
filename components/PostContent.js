@@ -4,8 +4,10 @@ import PostButtons from "./PostButtons";
 
 export default function PostContent({
     text, createdAt, author, _id, images,
-    likesCount, likedByUser, commentsCount,
-    big=false}) {
+    likesCount, commentsCount,
+    big=false}) 
+    // likedByUser
+    {
 
     function showImages() {
       if (!images?.length) {
@@ -61,7 +63,7 @@ export default function PostContent({
             <PostButtons 
                 id={_id} 
                 likesCount={likesCount} 
-                likedByUser={likedByUser}
+                // likedByUser={likedByUser}
                 commentsCount={commentsCount}
                 username={author?.username}
             />
