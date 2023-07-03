@@ -92,17 +92,3 @@ export default function Home() {
       </Layout>
     )
   }
-
-
-
-{/* {post.parent && (
-  <div>
-    <PostContent {...post.parent} likedByUser={idsLikedByUser.includes(post._id)}/>
-    <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
-      <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
-    </div>
-  </div>
-)}
-{!post.parent && (
-  <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
-)} */}

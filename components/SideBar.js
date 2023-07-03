@@ -15,7 +15,7 @@ export default function SideBar() {
   const profilePath = router.pathname === '/[username]';
 
   return (
-      <div className='absolute left-10 top-10 bg-litterWhite p-4 rounded-md flex flex-col gap-4'>
+      <div className='fixed left-10 top-10 bg-litterWhite p-4 rounded-md flex flex-col gap-4'>
         <Link href={'/'}>
           <span className={(router.pathname === '/' ? 'text-litterBlue' : 'text-black')+" font-bold text-lg cursor-pointer"}>Home</span>
         </Link>

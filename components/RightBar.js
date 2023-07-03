@@ -10,7 +10,7 @@ export default function RightBar() {
   const router = useRouter();
 
   return (
-      <div className='absolute right-10 top-10 bg-litterWhite p-4 rounded-md flex flex-col gap-4'>
+      <div className='fixed right-10 top-10 bg-litterWhite p-4 rounded-md flex flex-col gap-4'>
           {daysLeft && (
             <span className="text-lg">
               {daysLeft} days left
