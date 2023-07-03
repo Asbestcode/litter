@@ -26,3 +26,5 @@ export default async function handle(req, res) {
     return res.json({user,follow});
   }
 }
+
+// it's true
