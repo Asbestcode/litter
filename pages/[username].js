@@ -18,21 +18,19 @@ export default function UserPage() {
     const [postsLikedByUser, setPostsLikedByUser] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
+    const [postCount, setPostCount] = useState()
 
     useEffect(() => {
-        if(!username){
-            return
+        if (!username) {
+          return;
         }
         axios.get('/api/users?username='+username)
-            .then(response => {
-                setProfileInfo(response.data.user);
-                setOriginalProfileInfo(response.data.user);
-                setIsFollowing(!!response.data.follow);
-            })
-        // axios.get('/api/random')
-        // .then(response => {
-        //     console.log(response.data);;
-        // })
+          .then(response => {
+            setProfileInfo(response.data.user);
+            setOriginalProfileInfo(response.data.user);
+            setIsFollowing(!!response.data.follow);
+            setPostCount(response.data.postCount);
+          })
     }, [username]);
 
     useEffect(() => {
@@ -66,10 +64,10 @@ export default function UserPage() {
         setEditMode(false)
     }
 
-    async function toggleFollow() {
+    function toggleFollow() {
         setIsFollowing(prev => !prev);
-        await axios.post('/api/followers', {
-            destination: profileInfo?._id
+        axios.post('/api/followers', {
+          destination: profileInfo?._id,
         })
     }
     
@@ -79,9 +77,6 @@ export default function UserPage() {
         <Layout>
             {!!profileInfo && (
                 <div>
-                    <div className="">
-                        <TopNavigationLink/>
-                    </div>
                     <CoverPicture
                         editable={isUserProfile} 
                         src={profileInfo.cover} 
@@ -92,7 +87,10 @@ export default function UserPage() {
                             <div className="flex items-center absolute -top-14">
                                 <UserIcon color={profileInfo.userColor}/>
                                 {!editMode && (
-                                    <h1 className="text-2xl font-bold mt-10">{profileInfo.username}</h1>
+                                    <div>
+                                        <h1 className="text-2xl font-bold mt-10">{profileInfo.username}</h1>
+                                        <p className="flex">{postCount}</p>
+                                    </div>
                                 )}
                                 {editMode && (
                                     <input type="text" value={profileInfo.username}

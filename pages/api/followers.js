@@ -8,12 +8,12 @@ export default async function handle(req, res) {
   const session = await getServerSession(req, res, authOptions);
   const {destination} = req.body;
 
-  const existingFollow = await Follower.findOne({destination, source:session.user.id});
+  const existingFollow = await Follower.findOne({destination,source:session.user.id});
   if (existingFollow) {
     await existingFollow.deleteOne({destination, source:session.user.id});
-    return res.json(null);
+    res.json(null);
   } else {
-    const newFollow = await Follower.create({destination, source:session.user.id});
-    return res.json(newFollow);
+    const f = await Follower.create({destination,source:session.user.id});
+    res.json(f);
   }
 }

@@ -1,8 +1,8 @@
 import {initMongoose} from "../../lib/mongoose";
 import Post from "../../models/Post";
 import Like from "@/models/Like";
+import Dump from "@/models/Dump";
 import Follower from "@/models/Follower";
-import User from "@/models/User";
 import {getServerSession} from "next-auth";
 import {authOptions} from "./auth/[...nextauth]";
 
@@ -25,9 +25,9 @@ export default async function handler(req, res) {
             const author = req.query.author;
             let searchFilter;
             if (!author && !parent) {
-                const userFollows = await Follower.find({source:session.user.id}).exec();
-                const idsOfPeopleUserFollows = userFollows.map(item => item.destination);
-                searchFilter = {author:[...idsOfPeopleUserFollows, session.user.id]};
+                const myFollows = await Follower.find({source:session.user.id}).exec();
+                const idsOfPeopleIFollow = myFollows.map(f => f.destination);
+                searchFilter = {author:[...idsOfPeopleIFollow,session.user.id]};
             };
             if (author) {
                 searchFilter = {author};
@@ -44,11 +44,14 @@ export default async function handler(req, res) {
                 .sort({createdAt: -1})
                 .limit(20)
                 .exec();
-            const postsLikedByUser = await Like.find({
-                author: session.user.id,
-                post: posts.map(item => item._id)
-            })
-            const idsLikedByUser = postsLikedByUser.map(item => item.post);
+            let postsLikedByUser = [];
+            if (session) {
+                postsLikedByUser = await Like.find({
+                author:session.user.id,
+                post:posts.map(p => p._id),
+                });
+            }
+            let idsLikedByUser = postsLikedByUser.map(like => like.post);
             return res.json({
                 posts,
                 idsLikedByUser

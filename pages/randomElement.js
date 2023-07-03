@@ -1,7 +1,9 @@
 import { spicedData } from '@/lib/spicedData';
+import htmlToImage from 'html-to-image';
+import { toPng } from 'html-to-image';
 import { useRef } from 'react';
 
-export default function useRandomElement() {
+export default function RandomElementPage() {
   const elementRef = useRef(null);
 
   function getRandomItem(items) {
@@ -26,5 +28,27 @@ export default function useRandomElement() {
     );
   })();
 
-  return {randomElement};
+  const htmlToImageConvert = () => {
+    toPng(elementRef.current, { cacheBust: false })
+      .then((dataUrl) => {
+        fetch('/api/upload', {
+          method: 'POST',
+          body: data,
+        }).then(async response => {
+            const json = await response.json();
+            onChange(json.src);
+            setIsUploading(false);
+        })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <div>
+      <div style={{position:'absolute', top:'-2000px'}}>{randomElement}</div>
+      <button onClick={htmlToImageConvert}>Download Image</button>
+    </div>
+  );
 }

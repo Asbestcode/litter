@@ -3,6 +3,7 @@ import { PulseLoader } from "react-spinners";
 import axios from "axios";
 import Upload from "./Upload";
 import { uid } from "uid";
+import {random} from "../lib/randomImages"
 
 export default function PostForm({onPost, parent, compact}) {
   const [text,setText] = useState('');
@@ -22,8 +23,16 @@ export default function PostForm({onPost, parent, compact}) {
     setImages((prev) => prev.filter((image) => image.id !== imageToRemove))
   }
 
+  function randomImage(e) {
+    e.preventDefault();
+    const randomNumber = Math.floor(Math.random() * random.length);
+    const piece = random[randomNumber];
+    const url = `https://litter-test.s3.eu-central-1.amazonaws.com/random/${piece}`
+    setImages(prev => [...prev, {id: uid(), src: url}])
+  }
+
   return (
-    <form className="mx-4" onSubmit={handlePostSubmit}>
+    <form className="mx-4">
       <div className={(compact ? 'flex items-center' : 'flex flex-col flex-end')}>
         <div className="grow">
           <Upload onUploadFinish={src => setImages(prev => [...prev, {id: uid(), src: src}])}>
@@ -59,16 +68,18 @@ export default function PostForm({onPost, parent, compact}) {
           </Upload>
           {!compact && (
             <div className="text-right pt-2 pb-2">
-              <button className="bg-litterBlue text-white px-5 py-1 rounded-full border border-litterBorder">reply</button>
+              <button onClick={randomImage} className="text-litterBorder border border-litterBorder px-4 py-1 rounded-full mr-2">Random</button>
+              <button onClick={handlePostSubmit} className="bg-litterBlue text-white px-5 py-1 rounded-full border border-litterBorder">post</button>
             </div>
           )}
         </div> 
         {compact && (
           <div className="pl-2">
-            <button className="bg-litterBlue text-white px-5 py-1 rounded-full border border-litterBorder">post</button>
+            <button onClick={handlePostSubmit} className="bg-litterBlue text-white px-5 py-1 rounded-full border border-litterBorder">reply</button>
           </div>
         )}
       </div>
     </form>
   )
 }
+

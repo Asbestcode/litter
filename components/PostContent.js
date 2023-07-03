@@ -26,7 +26,7 @@ export default function PostContent({
           <div className="flex -mx-1">
             {images.length > 0 && images.map(img => (
               <div className="m-1" key={img.id}>
-                <img src={img.src} alt=""/>
+                <img src={img.src} className="max-h-80" alt=""/>
               </div>
             ))}
           </div>

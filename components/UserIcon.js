@@ -1,9 +1,16 @@
-export default function GarbageCanIcon({color}) {
+export default function GarbageCanIcon({color, mid=false, small=false}) {
+
+    let width;
+    let height;
+    if(mid){width = 81} else if(small){width = 54} else {width = 108};
+    if(mid){height = 101} else if(small){height = 68} else {height = 135};
+
     return(
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width={108}
-            height={135}
+            viewBox="0 0 108 135"
+            width={width}
+            height={height}
             fill="none"
             overflow="visible"
             // {...props}
