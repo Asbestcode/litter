@@ -2,7 +2,6 @@ import {useSession} from 'next-auth/react';
 import useUserInfo from "../hooks/useUserInfo";
 import {useEffect, useState} from 'react';
 import axios from 'axios';
-import {useRouter} from "next/router";
 import Layout from '../components/Layout';
 import UserIcon from '../components/UserIcon';
 import Link from 'next/link';
@@ -49,8 +48,11 @@ export default function Explore() {
               {followers.length > 0 && followers.map(follower => (
                 <Link href={`/${follower.username}`} key={follower._id}>
                   <div className='flex items-center'>
-                    <UserIcon color={follower.userColor}/>            
-                    <p className="text-2xl font-bold ml-1">{follower.username}</p>
+                    <UserIcon color={follower.userColor}/>
+                    <div className='flex flex-col ml-1 mt-4'>
+                      <p className="text-2xl font-bold">{follower.username}</p>
+                      <p className="text-lg text-litterLightGray">{follower.postCount} posts</p>
+                    </div>            
                   </div>
                 </Link>
               ))}
@@ -61,7 +63,10 @@ export default function Explore() {
                 <Link href={`/${follower.username}`} key={follower._id}>
                   <div className='flex items-center'>
                     <UserIcon color={follower.userColor} mid/>            
-                    <p className="text-lg font-bold ml-1">{follower.username}</p>
+                    <div className='flex flex-col ml-1 mt-4'>
+                      <p className="text-lg font-bold">{follower.username}</p>
+                      <p className="text-base text-litterLightGray">{follower.postCount} posts</p>
+                    </div> 
                   </div>
                 </Link>
               ))}
@@ -71,8 +76,11 @@ export default function Explore() {
               {restOfUsers.length > 0 && restOfUsers.map(user => (
                 <Link href={`/${user.username}`} key={user._id}>
                   <div className='flex items-center'>
-                    <UserIcon color={user.userColor} small/>            
-                    <p className="text-sm font-bold ml-1">{user.username}</p>
+                    <UserIcon color={user.userColor} small/>
+                    <div className='flex flex-col ml-1 mt-4'>
+                      <p className="text-base font-bold">{user.username}</p>
+                      <p className="text-sm text-litterLightGray">{user.postCount} posts</p>
+                    </div>            
                   </div>
                 </Link>
               ))}

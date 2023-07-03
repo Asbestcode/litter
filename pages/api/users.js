@@ -3,7 +3,6 @@ import User from "../../models/User";
 import Follower from "../../models/Follower";
 import {getServerSession} from "next-auth";
 import {authOptions} from "./auth/[...nextauth]";
-import Post from "@/models/Post";
 
 export default async function handle(req, res) {
   await initMongoose();
@@ -26,5 +25,3 @@ export default async function handle(req, res) {
     return res.json({user,follow});
   }
 }
-
-// it's true
