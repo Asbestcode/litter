@@ -24,7 +24,15 @@ export default function UserPage() {
     axios.get('/api/posts?author='+profileInfo._id)
       .then(response => {
         setPosts(response.data.posts);
-        setPostsLikedByUser(response.data.idsLikedByUser)
+        setPostsLikedByUser(response.data.idsLikedByUser);
+    })
+  }
+
+  function updatePosts() {
+    fetchHomePosts();
+    axios.get('/api/users?username='+username)
+    .then(response => {
+      setPostCount(response.data.user.postCount)
     })
   }
 
@@ -36,8 +44,8 @@ export default function UserPage() {
         .then(response => {
           setProfileInfo(response.data.user);
           setOriginalProfileInfo(response.data.user);
+          setPostCount(response.data.user.postCount)
           setIsFollowing(!!response.data.follow);
-          setPostCount(response.data.postCount);
         })
   }, [username]);
 
@@ -131,7 +139,7 @@ export default function UserPage() {
               )}
             </div>
           </div>
-          <PostForm onPost={() => {fetchHomePosts()}}/>
+          <PostForm onPost={() => {updatePosts()}}/>
           <div className="ml-4 mr-4 mt-8">
             {posts?.length > 0 && posts.map(post => 
               <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">

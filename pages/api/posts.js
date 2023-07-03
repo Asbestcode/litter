@@ -1,7 +1,7 @@
 import {initMongoose} from "../../lib/mongoose";
 import Post from "../../models/Post";
 import Like from "@/models/Like";
-import Dump from "@/models/Dump";
+import User from "@/models/User";
 import Follower from "@/models/Follower";
 import {getServerSession} from "next-auth";
 import {authOptions} from "./auth/[...nextauth]";
@@ -79,7 +79,11 @@ export default async function handler(req, res) {
             const parentPost = await Post.findById(parent);
             parentPost.commentsCount = await Post.countDocuments({parent});
             await parentPost.save();
-        }
+        };
+        const usersPosts = await Post.find({author:post.author});
+        const user = await User.findById(post.author);
+        user.postCount = usersPosts.length;
+        await user.save(); 
         return res.json(post);
     }
 }

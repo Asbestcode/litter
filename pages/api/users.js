@@ -23,8 +23,6 @@ export default async function handle(req, res) {
       source:session.user.id,
       destination:user._id
     });
-    const posts = await Post.find({author: session.user.id});
-    const postCount = posts.length;
-    return res.json({user,follow,postCount});
+    return res.json({user,follow});
   }
 }
