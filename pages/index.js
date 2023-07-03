@@ -19,9 +19,12 @@ export default function Home() {
     const router = useRouter();
     
     function getDaysLeft(timestampLastDump) {
-      const deadline = new Date(timestampLastDump).setDate(+14);
-      const today = new Date().getTime();
-      const difference = deadline - today;
+      const deadline = new Date(timestampLastDump)
+      deadline.setDate(deadline.getDate() + 14)
+      const today = new Date();
+      const deadlineTime = deadline.getTime();
+      const todayTime = today.getTime();
+      const difference = deadlineTime - todayTime;
       const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
       setDaysLeft(daysLeft);
     }
