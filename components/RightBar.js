@@ -13,7 +13,7 @@ export default function RightBar() {
       <div className='fixed right-10 top-10 bg-litterWhite p-4 rounded-md flex flex-col gap-4'>
           {daysLeft && (
             <span className="text-lg">
-              {daysLeft} days left
+              {daysLeft} {daysLeft > 1 ? 'days left' : 'day left'}
             </span>
           )}
         <Link href={'/dump'}>
