@@ -51,7 +51,7 @@ export default function Explore() {
                     <UserIcon color={follower.userColor}/>
                     <div className='flex flex-col ml-1 mt-4'>
                       <p className="text-2xl font-bold">{follower.username}</p>
-                      <p className="text-lg text-litterLightGray">{follower.postCount} posts</p>
+                      <p className="text-lg text-litterLightGray">{follower.postCount} {follower.postCount === 1 ? 'post' : 'posts'}</p>
                     </div>            
                   </div>
                 </Link>
@@ -65,7 +65,7 @@ export default function Explore() {
                     <UserIcon color={follower.userColor} mid/>            
                     <div className='flex flex-col ml-1 mt-4'>
                       <p className="text-lg font-bold">{follower.username}</p>
-                      <p className="text-base text-litterLightGray">{follower.postCount} posts</p>
+                      <p className="text-base text-litterLightGray">{follower.postCount} {follower.postCount === 1 ? 'post' : 'posts'}</p>
                     </div> 
                   </div>
                 </Link>
@@ -79,7 +79,7 @@ export default function Explore() {
                     <UserIcon color={user.userColor} small/>
                     <div className='flex flex-col ml-1 mt-4'>
                       <p className="text-base font-bold">{user.username}</p>
-                      <p className="text-sm text-litterLightGray">{user.postCount} posts</p>
+                      <p className="text-sm text-litterLightGray">{user.postCount} {user.postCount === 1 ? 'post' : 'posts'}</p>
                     </div>            
                   </div>
                 </Link>
