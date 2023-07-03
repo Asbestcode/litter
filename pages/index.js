@@ -14,27 +14,27 @@ export default function Home() {
     const {userInfo, status:userInfoStatus} = useUserInfo();
     const [posts, setPosts] = useState([]);
     const [idsLikedByUser, setIdsLikedByUser] = useState([])
-    const [modalVisible, setModalVisible] = useState(false);
-    const setDaysLeft = useDaysLeftStore((state) => state.setDaysLeft);
+    // const [modalVisible, setModalVisible] = useState(false);
+    // const setDaysLeft = useDaysLeftStore((state) => state.setDaysLeft);
     const router = useRouter();
     
-    function getDaysLeft(timestampLastDump) {
-      const deadline = new Date(timestampLastDump)
-      deadline.setDate(deadline.getDate() + 14)
-      const today = new Date();
-      const deadlineTime = deadline.getTime();
-      const todayTime = today.getTime();
-      const difference = deadlineTime - todayTime;
-      const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
-      setDaysLeft(daysLeft);
-    }
+    // function getDaysLeft(timestampLastDump) {
+    //   const deadline = new Date(timestampLastDump)
+    //   deadline.setDate(deadline.getDate() + 14)
+    //   const today = new Date();
+    //   const deadlineTime = deadline.getTime();
+    //   const todayTime = today.getTime();
+    //   const difference = deadlineTime - todayTime;
+    //   const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+    //   setDaysLeft(daysLeft);
+    // }
   
-    async function checkDumps() {
-      await axios.delete('/api/dumps').then(response => {
-        setModalVisible(response.data.modal);
-        getDaysLeft(response.data.dump[0].createdAt)
-      })
-    }
+    // async function checkDumps() {
+    //   await axios.delete('/api/dumps').then(response => {
+    //     setModalVisible(response.data.modal);
+    //     getDaysLeft(response.data.dump[0].createdAt)
+    //   })
+    // }
 
     async function fetchHomePosts() {
       await axios.get('/api/posts').then(response => {
@@ -48,7 +48,7 @@ export default function Home() {
         return
       }
       fetchHomePosts();
-      checkDumps();
+      // checkDumps();
     }, [session]);
 
     if (userInfoStatus === 'loading') {
@@ -66,9 +66,9 @@ export default function Home() {
 
     return (
       <Layout>
-        {modalVisible && (
+        {/* {modalVisible && (
           <Modal onClose={() => setModalVisible(false)}/>
-        )}
+        )} */}
         <div className='pt-1'>
           <div className="mt-6 ml-4 mr-4">
             <h1 className='font-bold text-2xl mb-8'>Check out that garbage</h1>

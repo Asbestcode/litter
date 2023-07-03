@@ -16,7 +16,6 @@ export default function Explore() {
 
     function filterUsers(data) {
       const allUserData = data.allUsers;
-      console.log(allUserData);
       const own = userInfo._id;
       const first = data.firstIds;
       const second = data.secondIds;
@@ -45,8 +44,8 @@ export default function Explore() {
     return (
       <Layout>
           <div className="mx-4 flex flex-col">
-            <h2 className='mt-8'>The garbage you follow</h2>
-            <div className='grid grid-cols-2 border-t border-litterBorder py-8 gap-y-8 ml-2'>
+            <h2 className='mt-8 border-b border-litterBorder'>The garbage you follow</h2>
+            <div className='grid grid-cols-2 py-8 gap-y-8 ml-2'>
               {followers.length > 0 && followers.map(follower => (
                 <Link href={`/${follower.username}`} key={follower._id}>
                   <div className='flex items-center'>
@@ -56,8 +55,8 @@ export default function Explore() {
                 </Link>
               ))}
             </div>
-            <h2>The garbage followed by the garbage you follow.</h2>
-            <div className='grid grid-cols-3 border-t border-litterBorder py-8 gap-y-6 ml-2'>
+            <h2 className='border-b border-litterBorder'>The garbage followed by the garbage you follow.</h2>
+            <div className='grid grid-cols-3 py-8 gap-y-6 ml-2'>
               {followersOfFollowers.length > 0 && followersOfFollowers.map(follower => (
                 <Link href={`/${follower.username}`} key={follower._id}>
                   <div className='flex items-center'>
@@ -67,8 +66,8 @@ export default function Explore() {
                 </Link>
               ))}
             </div>
-            <h2>The remaining garbage</h2>
-            <div className='grid grid-cols-4 border-t border-litterBorder py-8 gap-y-4 ml-2'>
+            <h2 className='border-b border-litterBorder'>The remaining garbage</h2>
+            <div className='grid grid-cols-4 py-8 gap-y-4 ml-2'>
               {restOfUsers.length > 0 && restOfUsers.map(user => (
                 <Link href={`/${user.username}`} key={user._id}>
                   <div className='flex items-center'>

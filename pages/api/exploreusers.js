@@ -14,6 +14,5 @@ export default async function handle(req, res) {
     const firstIds = firstFollows.map(item => item.destination);
     const secondFollows = await Follower.find().where('source').in(firstIds).exec();
     const secondIds = secondFollows.map(item => item.destination);
-    
 return res.json({allUsers, allIds, firstIds, secondIds});
 }
