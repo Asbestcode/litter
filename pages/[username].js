@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Layout from "@/components/Layout";
-import TopNavigationLink from "@/components/TopNavigationLink";
+import PostForm from "@/components/PostForm";
 import CoverPicture from "@/components/CoverPicture";
 import UserIcon from "@/components/UserIcon";
 import PostContent from "@/components/PostContent";
@@ -20,6 +20,14 @@ export default function UserPage() {
     const [isFollowing, setIsFollowing] = useState(false);
     const [postCount, setPostCount] = useState()
 
+    async function fetchHomePosts() {
+      axios.get('/api/posts?author='+profileInfo._id)
+        .then(response => {
+          setPosts(response.data.posts);
+          setPostsLikedByUser(response.data.idsLikedByUser)
+      })
+    }
+
     useEffect(() => {
         if (!username) {
           return;
@@ -36,12 +44,8 @@ export default function UserPage() {
     useEffect(() => {
         if(!profileInfo?._id){
             return
-        }
-        axios.get('/api/posts?author='+profileInfo._id)
-            .then(response => {
-                setPosts(response.data.posts);
-                setPostsLikedByUser(response.data.idsLikedByUser)
-            })
+        };
+        fetchHomePosts();
     }, [profileInfo])
 
     function updateUserImage(type, src) {
@@ -127,19 +131,20 @@ export default function UserPage() {
                             )}
                         </div>
                     </div>
-                    <div className="ml-4 mr-4">
+                    <PostForm onPost={() => {fetchHomePosts()}}/>
+                    <div className="ml-4 mr-4 mt-8">
                         {posts?.length > 0 && posts.map(post => 
                             <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
                                 {post.parent && (
                                     <div>
-                                    <PostContent {...post.parent} />
+                                    <PostContent {...post.parent} likedByUser={postsLikedByUser.includes(post._id)}/>
                                     <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
-                                        <PostContent {...post} />
+                                        <PostContent {...post} likedByUser={postsLikedByUser.includes(post._id)}/>
                                     </div>
                                     </div>
                                 )}
                                 {!post.parent && (
-                                    <PostContent {...post} />
+                                    <PostContent {...post} likedByUser={postsLikedByUser.includes(post._id)}/>
                                 )}
                             </div>
                         )}

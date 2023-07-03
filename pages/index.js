@@ -39,7 +39,6 @@ export default function Home() {
       await axios.get('/api/posts').then(response => {
         setPosts(response.data.posts)
         setIdsLikedByUser(response.data.idsLikedByUser)
-        console.log(response.data)
       })
     }
 
@@ -69,9 +68,9 @@ export default function Home() {
         {modalVisible && (
           <Modal onClose={() => setModalVisible(false)}/>
         )}
-        <div className='pt-10'>
-          <PostForm onPost={() => {fetchHomePosts()}}/>
+        <div className='pt-1'>
           <div className="mt-6 ml-4 mr-4">
+            <h1 className='font-bold text-2xl mb-8'>Check out that garbage</h1>
             {posts.length > 0 && posts.map(post => (
               <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
                 {post.parent && (
