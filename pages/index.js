@@ -1,9 +1,7 @@
 import UsernameForm from '../components/UsernameForm';
-import TopNavigationLink from '@/components/TopNavigationLink';
 import {useSession} from 'next-auth/react';
 import useUserInfo from "../hooks/useUserInfo";
 import {useEffect, useState} from 'react';
-import PostForm from '../components/PostForm';
 import axios from 'axios';
 import {useRouter} from "next/router";
 import PostContent from '../components/PostContent';
@@ -16,30 +14,32 @@ export default function Home() {
     const {userInfo, status:userInfoStatus} = useUserInfo();
     const [posts, setPosts] = useState([]);
     const [idsLikedByUser, setIdsLikedByUser] = useState([])
-    const [modalVisible, setModalVisible] = useState(false);
-    const setDaysLeft = useDaysLeftStore((state) => state.setDaysLeft);
+    // const [modalVisible, setModalVisible] = useState(false);
+    // const setDaysLeft = useDaysLeftStore((state) => state.setDaysLeft);
     const router = useRouter();
     
-    function getDaysLeft(timestampLastDump) {
-      const deadline = new Date(timestampLastDump).setDate(+14);
-      const today = new Date().getTime();
-      const difference = deadline - today;
-      const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
-      setDaysLeft(daysLeft);
-    }
+    // function getDaysLeft(timestampLastDump) {
+    //   const deadline = new Date(timestampLastDump)
+    //   deadline.setDate(deadline.getDate() + 14)
+    //   const today = new Date();
+    //   const deadlineTime = deadline.getTime();
+    //   const todayTime = today.getTime();
+    //   const difference = deadlineTime - todayTime;
+    //   const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+    //   setDaysLeft(daysLeft);
+    // }
   
-    async function checkDumps() {
-      await axios.delete('/api/dumps').then(response => {
-        setModalVisible(response.data.modal);
-        getDaysLeft(response.data.dump[0].createdAt)
-      })
-    }
+    // async function checkDumps() {
+    //   await axios.delete('/api/dumps').then(response => {
+    //     setModalVisible(response.data.modal);
+    //     getDaysLeft(response.data.dump[0].createdAt)
+    //   })
+    // }
 
     async function fetchHomePosts() {
       await axios.get('/api/posts').then(response => {
         setPosts(response.data.posts)
         setIdsLikedByUser(response.data.idsLikedByUser)
-        console.log(response.data)
       })
     }
 
@@ -48,7 +48,7 @@ export default function Home() {
         return
       }
       fetchHomePosts();
-      checkDumps();
+      // checkDumps();
     }, [session]);
 
     if (userInfoStatus === 'loading') {
@@ -66,14 +66,14 @@ export default function Home() {
 
     return (
       <Layout>
-        {modalVisible && (
+        {/* {modalVisible && (
           <Modal onClose={() => setModalVisible(false)}/>
-        )}
-        <div className='pt-10'>
-          <PostForm onPost={() => {fetchHomePosts()}}/>
+        )} */}
+        <div className='pt-1'>
           <div className="mt-6 ml-4 mr-4">
+            <h1 className='font-bold text-2xl mb-8'>Check out that garbage</h1>
             {posts.length > 0 && posts.map(post => (
-              <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+              <div key={post._id} className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterLightGray">
                 {post.parent && (
                   <div>
                     <PostContent {...post.parent} />
@@ -83,7 +83,7 @@ export default function Home() {
                   </div>
                 )}
                 {!post.parent && (
-                  <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
+                  <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)} />
                 )}
               </div>
             ))}

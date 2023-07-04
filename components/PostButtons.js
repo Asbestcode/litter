@@ -13,11 +13,11 @@ export default function PostButtons({
     async function toggleLike() {
         const response = await axios.post('/api/likes', {id})
         if (response.data?.like) {
-            setLikesCount(prev => prev + 1)
             setLikedByUser(true)
+            setLikesCount(prev => prev + 1)
         } else {
-            setLikesCount(prev => prev - 1)
             setLikedByUser(false)
+            setLikesCount(prev => prev - 1)
         }
     }
 

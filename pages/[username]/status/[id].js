@@ -4,7 +4,6 @@ import axios from "axios";
 import PostContent from "../../../components/PostContent";
 import PostForm from "@/components/PostForm";
 import Layout from "../../../components/Layout";
-import Link from "next/link";
 import useUserInfo from "@/hooks/useUserInfo";
 import TopNavigationLink from "@/components/TopNavigationLink";
 
@@ -12,6 +11,7 @@ export default function PostPage() {
     const router = useRouter();
     const {id} = router.query;
     const [post, setPost] = useState();
+    const [postLikedByUser, setPostLikedByUser] = useState();
     const [replies, setReplies] = useState([]);
     const [repliesLikedByUser, setRepliesLikedByUser] = useState([]);
     const {userInfo} = useUserInfo();
@@ -19,7 +19,9 @@ export default function PostPage() {
     function fetchData() {
         axios.get('/api/posts?id='+id)
             .then(response => {
-                setPost(response.data)
+                setPost(response.data.post);
+                console.log(response.data.idLikedByUser);
+                setPostLikedByUser(response.data.idLikedByUser)
             })
         axios.get('/api/posts?parent='+id)
             .then(response => {
@@ -37,20 +39,20 @@ export default function PostPage() {
 
     return (
         <Layout>
-            <TopNavigationLink navTitle={post?.author?.username}/>
+            <TopNavigationLink/>
             <div className="flex flex-col mb-6">
                 {!!post?._id && (
                     <div className="flex flex-col mx-4 mb-4 rounded-lg py-2 px-3 border border-litterBorder">
                         {post.parent && (
                             <div>
-                                <PostContent {...post.parent}/>
+                                <PostContent {...post.parent} />
                                 <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
-                                    <PostContent {...post} big />
+                                    <PostContent {...post} big likedByUser={postLikedByUser.includes(post._id)}/>
                                 </div>
                             </div>
                         )}
                         {!post.parent && (
-                          <PostContent {...post} big />
+                          <PostContent {...post} big likedByUser={postLikedByUser.includes(post._id)} />
                         )}
                     </div>
                 )}

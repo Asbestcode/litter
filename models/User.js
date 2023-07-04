@@ -7,6 +7,7 @@ const UserSchema = new Schema({
   userColor: String,
   cover: String,
   details: String,
+  postCount: {type:Number, default: 0},
 });
 
 const User = models?.User || model('User', UserSchema);

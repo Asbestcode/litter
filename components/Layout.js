@@ -1,7 +1,7 @@
 import SideBar from "./SideBar"
 import RightBar from "./RightBar"
 
-export default function Layout({children}) {
+export default function Layout({children, daysLeft}) {
   return (
   <div className="relative">
     <SideBar/>
