@@ -4,11 +4,11 @@ import {authOptions} from "./auth/[...nextauth]";
 import Like from "@/models/Like";
 import Post from "@/models/Post";
 
-async function updateLikesCount(postId) {
-    const post = await Post.findById(postId);
-    post.likesCount = await Like.countDocuments({post: postId});
-    await post.save();
-}
+// async function updateLikesCount(postId) {
+    // const post = await Post.findById(postId);
+    // post.likesCount = await Like.countDocuments({post: postId});
+//     await post.save();
+// }
 
 export default async function handle(req, res) {
     await initMongoose();
@@ -17,13 +17,30 @@ export default async function handle(req, res) {
     const postId = req.body.id;
     const userId = session.user.id;
     const existingLike = await Like.findOne({author: userId, post: postId});
+
     if (existingLike) {
         await existingLike.deleteOne({author: userId, post: postId});
-        await updateLikesCount(postId)
+
+        // const post = await Post.findById({postId});
+        // post.likesCount -= 1;
+        // await post.save();
+
+        Post.findByIdAndUpdate(postId, { $inc: { likesCount: -1 } });
+
+        // await updateLikesCount(postId);
+
         return res.json(null)
     } else {
-        const like = await Like.create({author: userId, post: postId})
-        await updateLikesCount(postId);
-        return res.json({like})
+        const like = await Like.create({author: userId, post: postId});
+
+        // const post = await Post.findById({postId});
+        // post.likesCount += 1;
+        // await post.save();
+
+        Post.findByIdAndUpdate(postId, { $inc: { likesCount: 1 } });
+
+        // await updateLikesCount(postId);
+
+        return res.json({like});
     }
 }

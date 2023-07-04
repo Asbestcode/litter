@@ -7,6 +7,7 @@ import CoverPicture from "@/components/CoverPicture";
 import UserIcon from "@/components/UserIcon";
 import PostContent from "@/components/PostContent";
 import useUserInfo from "@/hooks/useUserInfo";
+import Modal from "@/components/Modal"
 
 export default function UserPage() {
   const router = useRouter();
@@ -18,7 +19,8 @@ export default function UserPage() {
   const [postsLikedByUser, setPostsLikedByUser] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
-  const [postCount, setPostCount] = useState()
+  const [postCount, setPostCount] = useState();
+  const [warning, setWarning] = useState(false);
 
   async function fetchHomePosts() {
     axios.get('/api/posts?author='+profileInfo._id)
@@ -64,8 +66,16 @@ export default function UserPage() {
       const {username} = profileInfo;
       await axios.put('/api/profile', {
           username
-      });
-      setEditMode(false)
+      }).then(response => {
+        if(response.data === "same"){
+          cancelEdit()
+        } else if (response.data === "taken"){
+          setWarning(true);
+        } else {
+          setProfileInfo(prev => ({...prev, username: username}));
+          setEditMode(false)
+        }
+      })
   }
 
   function cancelEdit() {
@@ -87,6 +97,9 @@ export default function UserPage() {
 
   return (
     <Layout>
+      {warning && (
+        <Modal onClose={() => setWarning(false)}/>
+      )}
       {!!profileInfo && (
         <div>
           <CoverPicture
