@@ -16,14 +16,16 @@ export default function SideBar() {
   const profilePath = router.pathname === '/[username]';
   const loginPath = router.pathname ==='/login';
 
-  if (loginPath) {
-    return <div></div>
-  }
-
   return (
       <div className='sticky top-6 p-4 flex flex-col gap-2 items-center w-28'>
         <div className='bg-litterWhite rounded-md p-4 w-28 h-30'>
-          {userInfo && (
+          {loginPath && (
+            <div className='cursor-pointer flex flex-col items-center'>
+              <UserIcon color='#fff' small/>
+              <p className="font-bold text-base">Litter</p>
+            </div>
+          )}
+          {!loginPath && userInfo && (
             <Link href={`/${userInfo?.username}`}>
               <div className='cursor-pointer flex flex-col items-center'>
                 <UserIcon color={userInfo?.userColor} small/>
@@ -32,19 +34,36 @@ export default function SideBar() {
             </Link>
           )}
         </div>
-        <div className='bg-litterWhite flex flex-col gap-4 items-center rounded-md px-4 py-6 w-28'>
-          <Link href={'/'}>
-            <span className={(router.pathname === '/' ? 'text-litterBlue' : 'text-black')+" font-bold text-lg cursor-pointer"}>Home</span>
-          </Link>
-          <Link href={'/explore'}>
-            <span className={(router.pathname === '/explore' ? 'text-litterBlue' : 'text-black')+" font-bold text-lg cursor-pointer"}>Explore</span>
-          </Link>
-        </div>
-        <div className='bg-litterWhite gap-4 flex justify-center rounded-md px-4 py-3 w-28'>
-          <button onClick={logOut} className='border border-gray-800 px-3 py-1 rounded-md text-gray-800 pb-1 text-sm'>
-            Log out
-          </button>
-        </div>
+        {loginPath && (
+          <div className='bg-litterWhite flex flex-col gap-4 items-center rounded-md px-4 py-6 w-28'>
+              <span className={(router.pathname === '/' ? 'text-litterBlue' : 'text-black')+" font-bold text-lg cursor-pointer"}>Home</span>
+              <span className={(router.pathname === '/explore' ? 'text-litterBlue' : 'text-black')+" font-bold text-lg cursor-pointer"}>Explore</span>
+          </div>
+        )}
+        {!loginPath && (
+          <div className='bg-litterWhite flex flex-col gap-4 items-center rounded-md px-4 py-6 w-28'>
+            <Link href={'/'}>
+              <span className={(router.pathname === '/' ? 'text-litterBlue' : 'text-black')+" font-bold text-lg cursor-pointer"}>Home</span>
+            </Link>
+            <Link href={'/explore'}>
+              <span className={(router.pathname === '/explore' ? 'text-litterBlue' : 'text-black')+" font-bold text-lg cursor-pointer"}>Explore</span>
+            </Link>
+          </div>
+        )}
+        {loginPath && (
+          <div className='bg-litterWhite gap-4 flex justify-center rounded-md px-4 py-3 w-28'>
+            <button disabled onClick={logOut} className='border border-gray-800 px-3 py-1 rounded-md text-gray-800 pb-1 text-sm'>
+              Log out
+            </button>
+          </div>    
+        )}
+        {!loginPath && (
+          <div className='bg-litterWhite gap-4 flex justify-center rounded-md px-4 py-3 w-28'>
+            <button onClick={logOut} className='border border-gray-800 px-3 py-1 rounded-md text-gray-800 pb-1 text-sm'>
+              Log out
+            </button>
+          </div>
+        )}
       </div>
   )
 }

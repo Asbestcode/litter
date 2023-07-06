@@ -7,7 +7,7 @@ export default function Layout({children}) {
     <div className="">
       <SideBar/>
     </div>
-    <div className="bg-litterWhite pb-6">
+    <div className="bg-litterWhite pb-6 w-full">
       {children}
     </div>
     <div className="">
