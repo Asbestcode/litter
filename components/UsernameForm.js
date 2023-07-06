@@ -69,7 +69,7 @@ export default function UsernameForm() {
                     <p>➜</p>
                     <UserIcon color={userColor}/>
                 </div>
-                <button type="submit" className="block bg-litterBlue w-full rounded-full py-1 text-white border-2 border-litterBorder">
+                <button type="submit" className="block bg-litterDarkGray w-full rounded-full py-1 text-white border-2 border-litterBorder">
                     continue
                 </button>
             </form>

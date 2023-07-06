@@ -70,7 +70,7 @@ export default function Home() {
       return <div className='w-full h-screen flex flex-col items-center justify-center text-xl font-bold'>No user info</div>
     }
 
-    const hiddenTrigger = userInfo?.username === 'guy'
+    const hiddenTrigger = userInfo?.username === 'Guy'
 
     return (
       <Layout>

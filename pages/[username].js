@@ -132,7 +132,7 @@ export default function UserPage() {
                 <div>
                   {!isUserProfile && (
                     <button onClick={toggleFollow} 
-                      className={(isFollowing ? 'bg-litterLightGray' : 'bg-litterBlue')+' mt-4 mr-4 px-5 py-2 rounded-full text-white border border-litterBorder'}>
+                      className={(isFollowing ? 'bg-litterLightGray' : 'bg-litterDarkGray')+' mt-4 mr-4 px-5 py-2 rounded-full text-white border border-litterBorder'}>
                       {isFollowing ? 'Following' : 'Follow'}
                     </button>
                   )}
