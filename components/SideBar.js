@@ -67,5 +67,3 @@ export default function SideBar() {
       </div>
   )
 }
-
-{/* <p className={(profilePath ? 'border-litterBlue' : 'border-black')+" p-2 rounded-md border font-bold text-lg cursor-pointer"}>{userInfo?.username}</p> */}
