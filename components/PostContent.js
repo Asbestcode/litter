@@ -46,14 +46,14 @@ export default function PostContent({
             </div>
             {!big && (
                 <Link href={`/${author?.username}/status/${_id}`} className="flex bg-white rounded p-2 mb-1">
-                  <div>
+                  <div className="flex flex-col gap-2">
                     {text}
                     {showImages(big)}
                   </div>
                 </Link>
             )}
             {big && (
-                <div className="flex bg-white rounded p-2 mb-1">
+                <div className="flex flex-col gap-2 bg-white rounded p-2 mb-1">
                     {text}
                     {showImages(big)}
                 </div>
