@@ -25,7 +25,7 @@ export default async function handle(req, res) {
         // post.likesCount -= 1;
         // await post.save();
 
-        Post.findByIdAndUpdate(postId, { $inc: { likesCount: -1 } });
+        await Post.findByIdAndUpdate(postId, { $inc: { likesCount: -1 } });
 
         // await updateLikesCount(postId);
 
@@ -37,7 +37,7 @@ export default async function handle(req, res) {
         // post.likesCount += 1;
         // await post.save();
 
-        Post.findByIdAndUpdate(postId, { $inc: { likesCount: 1 } });
+        await Post.findByIdAndUpdate(postId, { $inc: { likesCount: 1 } });
 
         // await updateLikesCount(postId);
 

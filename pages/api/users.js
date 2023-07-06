@@ -9,9 +9,11 @@ export default async function handle(req, res) {
   const session = await getServerSession(req, res, authOptions);
 
   if (req.method === 'PUT') {
-    const {username} = req.body;
-    await User.findByIdAndUpdate(session.user.id, {username});
-    res.json('ok');
+    const userData = req.body;
+    const name = userData.name;
+    const color = userData.color;
+    await User.findByIdAndUpdate(session.user.id, {username: name, userColor: color});
+    return res.json('ok');
   }
   if (req.method === 'GET') {
     const {id,username} = req.query;

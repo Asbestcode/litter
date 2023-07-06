@@ -42,17 +42,29 @@ export default function PostPage() {
             <TopNavigationLink/>
             <div className="flex flex-col mb-6">
                 {!!post?._id && (
-                    <div className="flex flex-col mx-4 mb-4 rounded-lg py-2 px-3 border border-litterBorder">
+                    <div className="ml-4 mr-4">
                         {post.parent && (
-                            <div>
+                            <div className="relative flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+                                <div className="bg-litterLightGray absolute inset-0 rounded-lg opacity-30 pointer-events-none"></div>
                                 <PostContent {...post.parent} />
-                                <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative">
+                                <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative bg-litterWhite">
                                     <PostContent {...post} big likedByUser={postLikedByUser.includes(post._id)}/>
                                 </div>
                             </div>
+
+                        // <div className="relative flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+                        //     <div className="bg-litterLightGray absolute inset-0 rounded-lg opacity-30 pointer-events-none"></div>
+                        //     <PostContent {...post.parent} />
+                        //     <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative bg-litterWhite">
+                        //         <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
+                        //     </div>
+                        // </div>
+
                         )}
                         {!post.parent && (
-                          <PostContent {...post} big likedByUser={postLikedByUser.includes(post._id)} />
+                            <div className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+                                <PostContent {...post} big likedByUser={postLikedByUser.includes(post._id)} />
+                            </div>
                         )}
                     </div>
                 )}

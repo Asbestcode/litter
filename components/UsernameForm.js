@@ -2,12 +2,23 @@ import {useEffect, useState} from "react";
 import useUserInfo from "../hooks/useUserInfo";
 import {useRouter} from "next/router";
 import UserIcon from "./UserIcon";
+import Layout from "./Layout";
 
 export default function UsernameForm() {
     const {userInfo, status} = useUserInfo();
     const [username, setUsername] = useState('');
     const [userColor, setUserColor] = useState('#FFFFFF')
     const router = useRouter();
+
+    useEffect(() => {
+        if (status === 'loading') {
+          return;
+        }
+        if (username === '') {
+          const defaultUsername = 'username';
+          setUsername(defaultUsername);
+        }
+      }, [status])
     
     async function handleFormSubmit(e) {
         e.preventDefault();
@@ -17,7 +28,9 @@ export default function UsernameForm() {
             headers: {'content-type':'application/json'},
             body: JSON.stringify(userData),
         });
-        router.reload();
+        setTimeout(() => {
+            router.reload();
+        }, 1000);
     }
 
     if(status === 'loading') {
@@ -60,7 +73,6 @@ export default function UsernameForm() {
                     continue
                 </button>
             </form>
-        </div>
-        
+        </div>       
     )
 }

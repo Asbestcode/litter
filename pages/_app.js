@@ -12,29 +12,32 @@ export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }) {
-  const [modalVisible, setModalVisible] = useState(false);
   const setDaysLeft = useDaysLeftStore((state) => state.setDaysLeft);
 
-  function getDaysLeft(timestampLastDump) {
-    const deadline = new Date(timestampLastDump)
-    deadline.setDate(deadline.getDate() + 14)
-    const today = new Date();
-    const deadlineTime = deadline.getTime();
-    const todayTime = today.getTime();
-    const difference = deadlineTime - todayTime;
-    const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
-    setDaysLeft(daysLeft);
-  }
-
-  async function checkDumps() {
-    await axios.delete('/api/dumps').then(response => {
-      setModalVisible(response.data.modal);
-      getDaysLeft(response.data.dump[0].createdAt)
+  async function getDaysLeft() {
+    await axios.get('/api/dumps').then(response => {
+      const timestampLastDump = response.data[0].createdAt
+      const deadline = new Date(timestampLastDump)
+      deadline.setDate(deadline.getDate() + 14)
+      const today = new Date();
+      if (deadline > today) {
+        const deadlineTime = deadline.getTime();
+        const todayTime = today.getTime();
+        const difference = deadlineTime - todayTime;
+        const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+        setDaysLeft(daysLeft);
+      } else {
+        setDaysLeft(0);
+        axios.delete('/api/dumps');
+        // setTimeout(() => {
+          getDaysLeft();
+        // }, 10000);
+      }
     })
   }
 
   useEffect(() => {
-    checkDumps();
+    getDaysLeft();
   }, []);
 
   return (

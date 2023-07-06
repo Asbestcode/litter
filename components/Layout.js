@@ -1,14 +1,18 @@
 import SideBar from "./SideBar"
 import RightBar from "./RightBar"
 
-export default function Layout({children, daysLeft}) {
+export default function Layout({children}) {
   return (
-  <div className="relative">
-    <SideBar/>
-    <div className="max-w-xl mx-auto bg-litterWhite min-h-screen pb-6">
+  <div className="max-w-4xl mx-auto min-h-screen flex gap-12">
+    <div className="">
+      <SideBar/>
+    </div>
+    <div className="bg-litterWhite pb-6">
       {children}
     </div>
-    <RightBar/>
+    <div className="">
+      <RightBar/>
+    </div>
   </div>
   )
 }
