@@ -15,16 +15,6 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'DELETE') {
-      // const recentDump = await Dump.findOne().sort({ _id: -1 }).limit(1).exec();
-      // const deadline = new Date(recentDump.createdAt)
-      // deadline.setDate(deadline.getDate() + 14);
-      // const today = new Date();
-      // if (deadline > today) {
-      //   const dumps = await Dump.find()
-      //     .sort({createdAt: -1})
-      //     .exec();
-      //   return res.json({dump: dumps, modal: false})
-      // } else {
       const posts = await Post.find({createdAt : { $gte : new Date(2023, 5, 1)} });
       const allText = posts.map((post) => {
         const text = post.text;
@@ -41,6 +31,5 @@ export default async function handler(req, res) {
       await Like.deleteMany();
       await User.updateMany({}, {$set:{postCount: 0}})
       return res.json(dump);
-      // }
     }
 }

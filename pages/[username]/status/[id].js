@@ -51,18 +51,9 @@ export default function PostPage() {
                                     <PostContent {...post} big likedByUser={postLikedByUser.includes(post._id)}/>
                                 </div>
                             </div>
-
-                        // <div className="relative flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
-                        //     <div className="bg-litterLightGray absolute inset-0 rounded-lg opacity-30 pointer-events-none"></div>
-                        //     <PostContent {...post.parent} />
-                        //     <div className="flex flex-col my-3 rounded-lg py-2 px-3 border border-litterLightGray relative bg-litterWhite">
-                        //         <PostContent {...post} likedByUser={idsLikedByUser.includes(post._id)}/>
-                        //     </div>
-                        // </div>
-
                         )}
                         {!post.parent && (
-                            <div className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder">
+                            <div className="flex flex-col mb-6 rounded-lg py-2 px-3 border border-litterBorder bg-litterWhite">
                                 <PostContent {...post} big likedByUser={postLikedByUser.includes(post._id)} />
                             </div>
                         )}
@@ -79,7 +70,7 @@ export default function PostPage() {
                 )}
                 <div className="">
                     {replies.length > 0 && replies.map(reply => (
-                        <div key={reply._id} className="flex flex-col mb-6 mx-4 rounded-lg py-2 px-3 border border-litterBorder">
+                        <div key={reply._id} className="flex flex-col mb-6 mx-4 rounded-lg py-2 px-3 border border-litterBorder bg-litterWhite">
                             <PostContent {...reply} likedByUser={repliesLikedByUser.includes(reply._id)}/>
                         </div>
                     ))}

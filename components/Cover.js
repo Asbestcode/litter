@@ -1,7 +1,6 @@
 import CoverPicture from "./CoverPicture"
 import UserIcon from "./UserIcon"
 import { useState } from "react";
-import axios from "axios";
 
 export default function Cover({profileInfo, onSave}) {
     const [editMode, setEditMode] = useState(false);
@@ -68,5 +67,3 @@ export default function Cover({profileInfo, onSave}) {
         </div>
     )
 }
-
-// test

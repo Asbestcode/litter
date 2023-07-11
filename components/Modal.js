@@ -17,12 +17,9 @@ const fixedContainer = {
     width: "200px",
     height: "200px",
     position: "relative",
-    // top: "10%",
-    // left: "20%",
     background: "#fff",
     zIndex: 99,
     padding: "30px",
-    // transfrom: "translate(-50%, -50%)"
   };
 
 export default function Modal({onClose, content, garbage=false, alreadyTaken=false}) {

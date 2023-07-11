@@ -1,35 +1,41 @@
 import Link from 'next/link';
-import {useSession, signOut} from 'next-auth/react'
+import {signOut} from 'next-auth/react'
 import useUserInfo from "../hooks/useUserInfo";
 import {useRouter} from "next/router";
 import UserIcon from "./UserIcon"
+import { useUserColorStore } from '@/stores/useUserColorStore';
 
 export default function SideBar() {
-  const {data:session} = useSession();
-  const {userInfo, setUserInfo} = useUserInfo();
+  const {setUserInfo} = useUserInfo();
+  const userColor = useUserColorStore((state) => state.userColor);
+  const userName = useUserColorStore((state) => state.userName);
   const router = useRouter();
 
   async function logOut() {
     setUserInfo(null);
-    await signOut();
+    await signOut({ callbackUrl: '/' });
   }
-  const profilePath = router.pathname === '/[username]';
+
   const loginPath = router.pathname ==='/login';
 
   return (
       <div className='sticky top-6 p-4 flex flex-col gap-2 items-center w-28'>
-        <div className='bg-litterWhite rounded-md p-4 w-28 h-30'>
+        <div className='bg-litterWhite rounded-md p-4'>
           {loginPath && (
-            <div className='cursor-pointer flex flex-col items-center'>
-              <UserIcon color='#fff' small/>
-              <p className="font-bold text-base">Litter</p>
+            <div className='cursor-pointer flex flex-col items-center w-20'>
+              <div className='flex h-16'>
+                <UserIcon color='#fff'/>
+              </div>
+              <p className="mt-1 block font-bold text-base">Litter</p>
             </div>
           )}
-          {!loginPath && userInfo && (
-            <Link href={`/${userInfo?.username}`}>
-              <div className='cursor-pointer flex flex-col items-center'>
-                <UserIcon color={userInfo?.userColor} small/>
-                <p className="font-bold text-base">{userInfo?.username}</p>
+          {!loginPath && (
+            <Link href={`/${userName}`}>
+              <div className='cursor-pointer flex flex-col items-center w-20'>
+                <div className='flex h-16'>
+                  <UserIcon color={userColor}/>
+                </div>
+                <p className="mt-1 block font-bold text-base">{userName}</p>
               </div>
             </Link>
           )}

@@ -14,16 +14,16 @@ export default function RightBar() {
       {loginPath && (
         <div className='bg-litterWhite rounded-md p-4 w-32 flex flex-col items-center'>
           <GarbageTruck/>
-          <p className="font-bold text-base mt-2">
+          <p className="block font-bold text-base mt-2">
             {daysLeft} {daysLeft === 1 ? 'day left' : 'days left'}
           </p>
         </div>
       )}
       {!loginPath && (
-        <Link href={'/dump'}>
+        <Link href={'/landfill'}>
           <div className='bg-litterWhite rounded-md p-4 w-32 flex flex-col items-center'>
             <GarbageTruck/>
-            <p className="font-bold text-base mt-2">
+            <p className="block font-bold text-base mt-2">
               {daysLeft} {daysLeft === 1 ? 'day left' : 'days left'}
             </p>
           </div>

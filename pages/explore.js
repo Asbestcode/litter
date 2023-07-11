@@ -1,4 +1,3 @@
-import {useSession} from 'next-auth/react';
 import useUserInfo from "../hooks/useUserInfo";
 import {useEffect, useState} from 'react';
 import axios from 'axios';
@@ -6,11 +5,8 @@ import Layout from '../components/Layout';
 import Loading from '@/components/Loading';
 import UserIcon from '../components/UserIcon';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 export default function Explore() {
-    const router = useRouter();
-    const {data:session} = useSession();
     const [loading, setLoading] = useState(true);
     const {userInfo} = useUserInfo();
     const [followers, setFollowers] = useState([]);
@@ -33,13 +29,13 @@ export default function Explore() {
 
     function getUsersOnFire(likes) {
       const duplicates = likes.reduce((acc, obj) => {
-        const duplicate = acc.find(item => item.id === obj.post.id);
+        const duplicate = acc.find(item => item?.id === obj.post?.id);
         if (duplicate) {
-          duplicate.authors.push(obj.post.author);
+          duplicate.authors.push(obj.post?.author);
         } else {
           acc.push({
-            id: obj.post.id,
-            authors: [obj.post.author]
+            id: obj.post?.id,
+            authors: [obj.post?.author]
           });
         }
         return acc;
@@ -65,16 +61,24 @@ export default function Explore() {
         {loading ? (<Loading/>) : ( 
           <div className="mx-4 flex flex-col">
             {followers.length > 0 && (
-            <div>
-              <h2 className='mt-8 mb-2 text-2xl font-bold'>The garbage you follow</h2>
-              <div className='grid grid-cols-2 py-8 gap-y-8 pl-2 border border-litterBorder rounded-lg'>
+            <div className=''>
+              <h2 className='mt-2 sm:mt-8 mb-4 text-2xl text-litterLightGray text-center'>The garbage you follow</h2>
+              <div className='flex flex-wrap gap-x-10 gap-y-4 p-4 border border-litterLightGray rounded-lg'>
                 {followers.map(follower => (
                   <Link href={`/${follower.username}`} key={follower._id}>
-                    <div className='flex items-center'>
-                      {usersOnFire.includes(follower._id) ? (<UserIcon color={follower.userColor} onFire={true}/>) : (<UserIcon color={follower.userColor}/>)}
-                      <div className='flex flex-col ml-1 mt-4'>
-                        <p className="text-2xl font-bold">{follower.username}</p>
-                        <p className="text-lg text-litterLightGray">{follower.postCount} {follower.postCount === 1 ? 'post' : 'posts'}</p>
+                    <div className='flex sm:flex-row flex-col items-center'>
+                        {usersOnFire?.includes(follower._id) ? (
+                          <div className='h-28 sm:h-36 flex relative'>
+                            <UserIcon color={follower.userColor} onFire={true}/>
+                          </div>
+                          ) : (
+                          <div className='h-28 sm:h-36 flex shrink'>
+                            <UserIcon color={follower.userColor}/>
+                          </div>
+                        )}
+                      <div className='flex flex-col items-center sm:items-start sm:ml-1 sm:mt-4'>
+                        <p className="text-xl font-bold whitespace-nowrap">{follower.username}</p>
+                        <p className="text-lg text-litterLightGray whitespace-nowrap">{follower.postCount} {follower.postCount === 1 ? 'post' : 'posts'}</p>
                       </div>            
                     </div>
                   </Link>
@@ -83,16 +87,18 @@ export default function Explore() {
             </div>
             )}
             {followersOfFollowers.length > 0 && (
-            <div>
-              <h2 className='mt-4 mb-2 text-xl font-bold'>The garbage followed by the garbage you follow</h2>
-              <div className='grid grid-cols-3 py-8 gap-y-6 pl-2 border border-litterBorder rounded-lg'>
+            <div className=''>
+              <h2 className='mt-8 mb-4 text-xl text-litterLightGray text-center'>The garbage followed by the garbage you follow</h2>
+              <div className='flex flex-wrap justify-around p-4 gap-y-6 gap-x-8 border border-litterLightGray rounded-lg'>
                 {followersOfFollowers.map(follower => (
                   <Link href={`/${follower.username}`} key={follower._id}>
-                    <div className='flex items-center'>
-                      {usersOnFire.includes(follower._id) ? (<UserIcon color={follower.userColor} onFire={true} mid/>) : (<UserIcon color={follower.userColor} mid/>)}           
-                      <div className='flex flex-col ml-1 mt-4'>
-                        <p className="text-lg font-bold">{follower.username}</p>
-                        <p className="text-base text-litterLightGray">{follower.postCount} {follower.postCount === 1 ? 'post' : 'posts'}</p>
+                    <div className='flex sm:flex-row flex-col items-center'>
+                      <div className='h-20 sm:h-28 flex shrink'>
+                        {usersOnFire?.includes(follower._id) ? (<UserIcon color={follower.userColor} onFire={true}/>) : (<UserIcon color={follower.userColor}/>)}
+                      </div>
+                      <div className='flex flex-col items-center sm:items-start sm:ml-1 sm:mt-4'>
+                        <p className="text-lg font-bold whitespace-nowrap">{follower.username}</p>
+                        <p className="text-base text-litterLightGray whitespace-nowrap">{follower.postCount} {follower.postCount === 1 ? 'post' : 'posts'}</p>
                       </div> 
                     </div>
                   </Link>
@@ -100,15 +106,23 @@ export default function Explore() {
               </div>
             </div>
             )}
-            <h2 className='mt-4 mb-2 font-bold text-lg'>The remaining garbage</h2>
-            <div className='grid grid-cols-4 py-8 gap-y-4 pl-2 border border-litterBorder rounded-lg'>
+            <h2 className='mt-8 mb-4 text-lg text-litterLightGray text-center'>The remaining garbage</h2>
+            <div className='flex flex-wrap p-4 gap-y-4 gap-x-6 border border-litterLightGray rounded-lg'>
               {restOfUsers.length > 0 && restOfUsers.map(user => (
                 <Link href={`/${user.username}`} key={user._id}>
-                  <div className='flex items-center'>
-                  {usersOnFire.includes(user._id) ? (<UserIcon color={user.userColor} onFire={true} small/>) : (<UserIcon color={user.userColor} small/>)}
-                    <div className='flex flex-col ml-1 mt-4'>
-                      <p className="text-base font-bold">{user.username}</p>
-                      <p className="text-sm text-litterLightGray">{user.postCount} {user.postCount === 1 ? 'post' : 'posts'}</p>
+                  <div className='flex sm:flex-row flex-col items-center'>
+                      {usersOnFire?.includes(user._id) ? (
+                        <div className='h-16 sm:h-20 flex shrink'>
+                          <UserIcon color={user.userColor} onFire={true}/>
+                        </div>
+                      ) : (
+                        <div className='h-16 sm:h-20 flex shrink'>
+                          <UserIcon color={user.userColor}/> 
+                        </div>
+                      )}
+                    <div className='flex flex-col items-center sm:items-start sm:ml-1 sm:mt-4'>
+                      <p className="text-base font-bold whitespace-nowrap">{user.username}</p>
+                      <p className="text-sm text-litterLightGray whitespace-nowrap">{user.postCount} {user.postCount === 1 ? 'post' : 'posts'}</p>
                     </div>            
                   </div>
                 </Link>

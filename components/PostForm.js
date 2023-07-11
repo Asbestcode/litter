@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PulseLoader } from "react-spinners";
 import axios from "axios";
 import Upload from "./Upload";
@@ -40,7 +40,7 @@ export default function PostForm({onPost, parent, compact}) {
               <div className="">
                 <div className={(compact ? 'h-10' : 'h-24')+" w-full rounded-lg overflow-hidden border border-litterBorder"}>
                   <textarea
-                    className={(compact ? 'h-10' : 'h-24')+" w-full p-2 bg-litterDarkGray text-litterWhite resize-none"}
+                    className={(compact ? 'h-10' : 'h-24')+" w-full p-2 bg-litterDarkGray text-litterWhite resize-none no-scrollbar"}
                     placeholder={'put some garbage'}
                     value={text}
                     onChange={e => setText(e.target.value)}
@@ -71,14 +71,12 @@ export default function PostForm({onPost, parent, compact}) {
                 <button onClick={randomImage} className="text-litterBorder mr-3">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    // width="16"
-                    // height="16"
                     fill="currentColor"
-                    className="h-6 w-6"
+                    className="h-6 w-6 bg-white rounded"
                     viewBox="0 0 16 16"
                   >
                     <path d="M13 1a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V3a2 2 0 012-2h10zM3 0a3 3 0 00-3 3v10a3 3 0 003 3h10a3 3 0 003-3V3a3 3 0 00-3-3H3z"></path>
-                    <path d="M5.5 4a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm8 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0 8a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-8 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm4-4a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
+                    <path fill="" d="M5.5 4a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm8 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm0 8a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm-8 0a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zm4-4a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"></path>
                   </svg>
                 </button>
                 <button onClick={handlePostSubmit} className="bg-litterDarkGray text-white px-5 py-1 rounded-full border border-litterBorder">post</button>
@@ -86,7 +84,7 @@ export default function PostForm({onPost, parent, compact}) {
           )}
         </div> 
         {compact && (
-          <div className="pl-2">
+          <div className="ml-4">
             <button onClick={handlePostSubmit} className="bg-litterDarkGray text-white px-5 py-1 rounded-full border border-litterBorder">reply</button>
           </div>
         )}

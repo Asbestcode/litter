@@ -4,7 +4,8 @@ import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en.json'
 import axios from "axios";
 import { useDaysLeftStore } from "@/stores/useDaysLeftStore";
-import { useState, useEffect } from "react";
+import { useUserColorStore } from "@/stores/useUserColorStore";
+import { useEffect } from "react";
 
 TimeAgo.addLocale(en)
 
@@ -13,6 +14,8 @@ export default function App({
   pageProps: { session, ...pageProps },
 }) {
   const setDaysLeft = useDaysLeftStore((state) => state.setDaysLeft);
+  const setUserColor = useUserColorStore((state) => state.setUserColor);
+  const setUserName = useUserColorStore((state) => state.setUserName);
 
   async function getDaysLeft() {
     await axios.get('/api/dumps').then(response => {
@@ -40,9 +43,14 @@ export default function App({
     getDaysLeft();
   }, []);
 
+  function drillUp(color, name) {
+    setUserColor(color);
+    setUserName(name);
+  }
+
   return (
     <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <Component {...pageProps} drillUp={drillUp}/>
     </SessionProvider>
   )
 }
