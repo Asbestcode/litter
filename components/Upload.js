@@ -3,8 +3,8 @@ import { useState } from "react";
 
 export default function Upload({children, onUploadFinish}) {
   const [isFileNearby, setIsFileNearby] = useState(false);
-  const [isFileOver,setIsFileOver] = useState(false);
-  const [isUploading,setIsUploading] = useState(false);
+  const [isFileOver, setIsFileOver] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   function uploadImage(files, e) {
     e.preventDefault();

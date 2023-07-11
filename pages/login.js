@@ -1,14 +1,11 @@
-import {getProviders, signIn, signOut, useSession} from 'next-auth/react'
+import {getProviders, signIn, useSession} from 'next-auth/react'
 import {useRouter} from "next/router";
-import UsernameForm from '../components/UsernameForm';
-import useUserInfo from "../hooks/useUserInfo";
 import ProviderLogo from '../components/ProviderLogo';
 import Layout from '@/components/Layout';
 import Loading from '@/components/Loading';
 
 export default function LoginPage({providers}) {
     const {data, status} = useSession();
-    const {userInfo, status:userInfoStatus} = useUserInfo();
     const router = useRouter();
 
     if (status === 'loading') {

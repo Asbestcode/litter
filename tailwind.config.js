@@ -11,9 +11,18 @@ module.exports = {
         litterBlue: '#308CD8',
         litterBorder: '#2f3336',
         litterLightGray: '#71767b',
+        litterLightGrayLight: '#9B9FA2',
+        litterLightGrayLighter: '#C6C8CA',
+        litterLightGrayLighter2: '#D7D8D9',
+        litterLightGrayLighter3: '#D1D3D4',
+        litterLightGrayLighter4: '#DCDEDF',
+        litterLightGrayLighter5: '#E8E9E9',
         litterDarkGray: '#17181C',
       }
     },
   },
-  plugins: [],
+  corePlugins: {
+    aspectRatio: false,
+  },
+  plugins: [require('@tailwindcss/aspect-ratio')],
 }

@@ -7,7 +7,7 @@ import Post from "@/models/Post";
 // async function updateLikesCount(postId) {
     // const post = await Post.findById(postId);
     // post.likesCount = await Like.countDocuments({post: postId});
-//     await post.save();
+    // await post.save();
 // }
 
 export default async function handle(req, res) {
@@ -20,11 +20,6 @@ export default async function handle(req, res) {
 
     if (existingLike) {
         await existingLike.deleteOne({author: userId, post: postId});
-
-        // const post = await Post.findById({postId});
-        // post.likesCount -= 1;
-        // await post.save();
-
         await Post.findByIdAndUpdate(postId, { $inc: { likesCount: -1 } });
 
         // await updateLikesCount(postId);
@@ -32,11 +27,6 @@ export default async function handle(req, res) {
         return res.json(null)
     } else {
         const like = await Like.create({author: userId, post: postId});
-
-        // const post = await Post.findById({postId});
-        // post.likesCount += 1;
-        // await post.save();
-
         await Post.findByIdAndUpdate(postId, { $inc: { likesCount: 1 } });
 
         // await updateLikesCount(postId);
