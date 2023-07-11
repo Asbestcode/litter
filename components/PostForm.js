@@ -66,7 +66,7 @@ export default function PostForm({onPost, parent, compact}) {
                   <textarea
                     className={(compact ? 'h-10' : 'h-24')+" w-full p-2 bg-litterDarkGray text-litterWhite resize-none no-scrollbar"}
                     placeholder={'put some garbage'}
-                    minlength="1"
+                    minLength={1}
                     value={text}
                     onChange={e => setText(e.target.value)}
                   />

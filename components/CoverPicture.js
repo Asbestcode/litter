@@ -55,7 +55,8 @@ export default function CoverPicture({src, onChange, editable=false}) {
     return (
         <div className="overflow-hidden">
             <FileDrop
-                onDrop={updateImage} 
+                onDrop={updateImage}
+                onTargetClick={onTargetClick} 
                 onFrameDragEnter={() => setIsFileNearby(true)}
                 onFrameDragLeave={() => setIsFileNearby(false)}
                 onFrameDrop={() => setIsFileNearby(false)}
