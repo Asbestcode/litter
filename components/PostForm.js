@@ -14,6 +14,9 @@ export default function PostForm({onPost, parent, compact}) {
 
   async function handlePostSubmit(e) {
     e.preventDefault();
+    if(text === '' && !images.length > 0) {
+      return
+    }
     await axios.post('/api/posts', {text, parent, images});
     setText('');
     setImages([]);
