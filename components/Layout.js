@@ -14,7 +14,7 @@ export default function Layout({children}) {
     <div className="hidden sm:block">
       <SideBar/>
     </div>
-    <div className="bg-litterWhite pb-20 sm:pb-6 w-full min-h-screen">
+    <div className="bg-litterWhite pb-16 sm:pb-6 w-full min-h-screen">
       {children}
     </div>
     <div className="hidden sm:block">
