@@ -106,28 +106,30 @@ export default function Explore() {
               </div>
             </div>
             )}
-            <h2 className='mt-8 mb-4 text-lg text-litterLightGray text-center'>The remaining garbage</h2>
-            <div className='flex flex-wrap p-4 gap-y-4 gap-x-6 border border-litterLightGray rounded-lg'>
-              {restOfUsers.length > 0 && restOfUsers.map(user => (
-                <Link href={`/${user.username}`} key={user._id}>
-                  <div className='flex sm:flex-row flex-col items-center'>
-                      {usersOnFire?.includes(user._id) ? (
-                        <div className='h-16 sm:h-20 flex shrink'>
-                          <UserIcon color={user.userColor} onFire={true}/>
-                        </div>
-                      ) : (
-                        <div className='h-16 sm:h-20 flex shrink'>
-                          <UserIcon color={user.userColor}/> 
-                        </div>
-                      )}
-                    <div className='flex flex-col items-center sm:items-start sm:ml-1 sm:mt-4'>
-                      <p className="text-base font-bold whitespace-nowrap">{user.username}</p>
-                      <p className="text-sm text-litterLightGray whitespace-nowrap">{user.postCount} {user.postCount === 1 ? 'post' : 'posts'}</p>
-                    </div>            
-                  </div>
-                </Link>
-              ))}
-            </div>
+            {restOfUsers.length > 0 && (<>
+              <h2 className='mt-8 mb-4 text-lg text-litterLightGray text-center'>The remaining garbage</h2>
+              <div className='flex flex-wrap p-4 gap-y-4 gap-x-6 border border-litterLightGray rounded-lg'>
+                {restOfUsers.map(user => (
+                  <Link href={`/${user.username}`} key={user._id}>
+                    <div className='flex sm:flex-row flex-col items-center'>
+                        {usersOnFire?.includes(user._id) ? (
+                          <div className='h-16 sm:h-20 flex shrink'>
+                            <UserIcon color={user.userColor} onFire={true}/>
+                          </div>
+                        ) : (
+                          <div className='h-16 sm:h-20 flex shrink'>
+                            <UserIcon color={user.userColor}/> 
+                          </div>
+                        )}
+                      <div className='flex flex-col items-center sm:items-start sm:ml-1 sm:mt-4'>
+                        <p className="text-base font-bold whitespace-nowrap">{user.username}</p>
+                        <p className="text-sm text-litterLightGray whitespace-nowrap">{user.postCount} {user.postCount === 1 ? 'post' : 'posts'}</p>
+                      </div>            
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </>)}
           </div>)
         }
       </Layout>
